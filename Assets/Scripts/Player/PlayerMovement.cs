@@ -20,12 +20,10 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //inhabilita el movimiento si hay una conversación
-
-        //rehabilitar cuando se introduzca el dialogo
-       // if (DialogueManager.GetInstance().dialogueIsPlaying)
-       // {
-         //   return;
-       // }
+        if (DialogueManager.GetInstance().dialogueIsPlaying)
+        {
+            return;
+        }
 
         Movement();
         Animating();
