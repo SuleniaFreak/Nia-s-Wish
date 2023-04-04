@@ -106,7 +106,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4517532821727790689}
-  - component: {fileID: 1740965602140989264}
   m_Layer: 0
   m_Name: Nyaffy1
   m_TagString: Untagged
@@ -131,20 +130,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -88.862, z: 0}
---- !u!114 &1740965602140989264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3889509764760116443}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f71321a3e5d45f4cb3a3bc08f36fa78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nyaffyBase: {fileID: 2100000, guid: da58971c363474248aafb917982d9116, type: 2}
-  nyaffyFace: {fileID: 2100000, guid: 4e41e8bd4b186444d9b601e4dcdb6781, type: 2}
 --- !u!1 &4199874387941004272
 GameObject:
   m_ObjectHideFlags: 0

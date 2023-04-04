@@ -73,7 +73,7 @@ public class DialogueManager : MonoBehaviour
 
         //Resetamos los cuadros de texto y nombre para que no guarde nada de otras conversaciones
         displayNameText.text = "???";
-        dialogueBoxAnimator.Play("playerBox");
+        dialogueBoxAnimator.Play("idleOpen");
 
         ContinueStory();
 
@@ -82,7 +82,7 @@ public class DialogueManager : MonoBehaviour
     //método para cerrar el dialogo si ha terminado el texto
     private IEnumerator ExitDialogueMode()
     {
-        dialogueBoxAnimator.Play("playerClose"); //ejecuta la animación para ocultar el panel antes de apagarlo
+        dialogueBoxAnimator.Play("idleClose"); //ejecuta la animación para ocultar el panel antes de apagarlo
         yield return new WaitForSeconds(0.5f);
 
         dialogueIsPlaying = false;
@@ -132,11 +132,11 @@ public class DialogueManager : MonoBehaviour
             {
                 case SPEAKER_TAG:
                     displayNameText.text = tagValue; //Muestra el nombre del hablante segun el tag en ink
-                    Debug.Log("speaker=" + tagValue);
+                    //Debug.Log("speaker=" + tagValue);
                     break;
                 case LAYOUT_TAG:
                     dialogueBoxAnimator.Play(tagValue); //ejecutará las animaciones según el tag en ink
-                    Debug.Log("layout=" + tagValue);
+                   // Debug.Log("layout=" + tagValue);
                     break;
             }
 
