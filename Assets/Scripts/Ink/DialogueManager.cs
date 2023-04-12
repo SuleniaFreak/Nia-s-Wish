@@ -14,6 +14,9 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI displayNameText; //texto de quien habla
     private Animator dialogueBoxAnimator; //cambia de animación del panel de dialogo
 
+    [Header("New Game Button")]
+    [SerializeField] private NewGame newGameButton;
+
 
     //Variable para usar el archivo JSON del dialogo
     private Story currentStory;
@@ -44,6 +47,7 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialogueBox.SetActive(false);
         dialogueBoxAnimator = dialogueBox.GetComponent<Animator>();
+
 
     }
 
@@ -82,12 +86,19 @@ public class DialogueManager : MonoBehaviour
     //método para cerrar el dialogo si ha terminado el texto
     private IEnumerator ExitDialogueMode()
     {
-        dialogueBoxAnimator.Play("idleClose"); //ejecuta la animación para ocultar el panel antes de apagarlo
-        yield return new WaitForSeconds(0.5f);
-
+        if (newGameButton.isIntroPlaying)
+        {
+            dialogueBoxAnimator.Play("introClose");
+        }
+        else
+        {
+            dialogueBoxAnimator.Play("idleClose"); //ejecuta la animación para ocultar el panel antes de apagarlo
+            yield return new WaitForSeconds(0.5f);
+        }
         dialogueIsPlaying = false;
         dialogueBox.SetActive(false); //pendiente de ver si con evento de animacion funciona igual
         dialogueText.text = "";
+
     }
 
     //método llamado para comprobar si quedan lineas de dialogo
@@ -105,6 +116,11 @@ public class DialogueManager : MonoBehaviour
         { //si has acabado, cierra el panel de texto
             StartCoroutine(ExitDialogueMode());
         }
+    }
+
+    public bool IsNotDialoguePlaying()
+    {
+        return dialogueIsPlaying == false;
     }
     #endregion
 
@@ -136,7 +152,7 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case LAYOUT_TAG:
                     dialogueBoxAnimator.Play(tagValue); //ejecutará las animaciones según el tag en ink
-                   // Debug.Log("layout=" + tagValue);
+                                                        // Debug.Log("layout=" + tagValue);
                     break;
             }
 

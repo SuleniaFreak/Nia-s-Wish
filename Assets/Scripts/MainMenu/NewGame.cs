@@ -11,7 +11,8 @@ public class NewGame : MonoBehaviour
     Animator anim;
 
     [Header("Ink JSON")]
-    [SerializeField] private TextAsset inkJSON; //primer dialogo
+    [SerializeField] private TextAsset inkHouse; //primer dialogo
+    [SerializeField] private TextAsset inkNia;
 
     //en pruebas
     [Header("Intro Settings (player)")]
@@ -22,6 +23,8 @@ public class NewGame : MonoBehaviour
     [SerializeField] private GameObject menuCam;
     [SerializeField] private GameObject introCam;
     private CinemachineVirtualCamera camPriority;
+
+    public bool isIntroPlaying;
 
     private void Start()
     {
@@ -41,6 +44,8 @@ public class NewGame : MonoBehaviour
     public void NewGamePressed()
     {
         StartCoroutine("IntroSetting");
+        isIntroPlaying = true;
+        
     }
 
     IEnumerator IntroSetting() //en proceso
@@ -52,25 +57,31 @@ public class NewGame : MonoBehaviour
         // gestión de sistemas de particulas
         playerAnim.Play("StandUp");
         yield return new WaitForSeconds(2f);
-        StartConversation();
-        yield return new WaitForSeconds(1f);
+        StartConversation(inkHouse);
+        yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
+        isIntroPlaying = false;
+        SetPlayerCam();
+        yield return new WaitForSeconds(2f);
+        
+        StartConversation(inkNia);
+        yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
 
-        //condición para cambiar la prioridad de la camara del jugador
-        //if ()
-        {
-            //Debug.Log("he entrado en el if");
-            camPriority = introCam.gameObject.GetComponent<CinemachineVirtualCamera>();
-            camPriority.Priority = 2;
-        }
-
+        
         StopAllCoroutines();
 
     }
 
-    void StartConversation()
+    void StartConversation(TextAsset inkJSON)
     {
-        //inicia el dialogo
+        
         DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+    }
+
+
+    public void SetPlayerCam()
+    {
+        camPriority = introCam.gameObject.GetComponent<CinemachineVirtualCamera>();
+        camPriority.Priority = 2;
     }
 
     #endregion

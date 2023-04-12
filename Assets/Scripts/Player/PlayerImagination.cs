@@ -72,7 +72,7 @@ public class PlayerImagination : MonoBehaviour
         else
         {
             Cursor.lockState = CursorLockMode.None;
-            virtualCamera.Priority = 8;
+            virtualCamera.Priority = 6;
             playerMovement.enabled = true;
 
             if (ObjectDetected != null)
