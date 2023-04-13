@@ -7,19 +7,18 @@ public class NewGame : MonoBehaviour
 {
     [Header("Main Menu Settings")]
     [SerializeField] private GameObject menuPanel;
-    private AudioSource startSound; //sonido al apretar el botón "Nueva Partida" 
+    private AudioSource startSound;  
     Animator anim;
 
     [Header("Ink JSON")]
-    [SerializeField] private TextAsset inkHouse; //primer dialogo
+    [SerializeField] private TextAsset inkHouse;
     [SerializeField] private TextAsset inkNia;
 
-    //en pruebas
-    [Header("Intro Settings (player)")]
+    [Header("Characters")]
     [SerializeField] private GameObject player;
     Animator playerAnim;
 
-    [Header("Intro Settings (Cameras)")]
+    [Header("Cinemachine (VCameras)")]
     [SerializeField] private GameObject menuCam;
     [SerializeField] private GameObject introCam;
     private CinemachineVirtualCamera camPriority;
@@ -29,10 +28,10 @@ public class NewGame : MonoBehaviour
     private void Start()
     {
         StopAllCoroutines();
-        ComponentsCollector();
+        CatcherReferences();
     }
 
-    private void ComponentsCollector()
+    private void CatcherReferences()
     {
         startSound = GetComponent<AudioSource>();
         anim = menuPanel.GetComponent<Animator>();
@@ -54,19 +53,17 @@ public class NewGame : MonoBehaviour
         anim.enabled = true;
         camPriority.Priority = 2;
         yield return new WaitForSeconds(1f);
-        // gestión de sistemas de particulas
+        //gestión de sistemas de particulas pétalos y viento
+        //música y sfx (si hay)
         playerAnim.Play("StandUp");
         yield return new WaitForSeconds(2f);
         StartConversation(inkHouse);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         isIntroPlaying = false;
         SetPlayerCam();
-        yield return new WaitForSeconds(2f);
-        
+        yield return new WaitForSeconds(2f); 
         StartConversation(inkNia);
-        yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-
-        
+        yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying); 
         StopAllCoroutines();
 
     }

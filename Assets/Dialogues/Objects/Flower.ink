@@ -1,5 +1,5 @@
 -> Main
 
 == Main ==
-Hala! ¡Qué flor más bonita! #speaker:Nia #layout:idleOpen
+Hala! ¡Qué flor más bonita! #speaker:Nia 
 ->END
