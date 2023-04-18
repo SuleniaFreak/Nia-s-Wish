@@ -28,7 +28,6 @@ public class InteractableTrigger : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
-                //Debug.Log(inkJSON.text);
             }
         }
         else

@@ -11,12 +11,13 @@ public class PlayerImagination : MonoBehaviour
     public LayerMask layerMask;
     GameObject ObjectDetected;
 
-
+    [Header("Scripts")]
     CinemachineVirtualCamera virtualCamera;
     PlayerMovement playerMovement;
 
-    private Color colorAlpha; //gestiona el alfa del color del nyaffy
-    private Material objectColor; //gestiona el material del nyaffy
+    [Header("Nyaffy material settings")]
+    Color colorAlpha; //gestiona el alfa del color del nyaffy
+    Material objectColor; //gestiona el material del nyaffy
     void Start()
     {
         virtualCamera = transform.GetComponent<CinemachineVirtualCamera>();
@@ -29,6 +30,8 @@ public class PlayerImagination : MonoBehaviour
         ray.direction = transform.forward;
         ActivateImagination();
     }
+
+
 
     //método que se activará cuando estemos detrás de la casa
     void ActivateImagination()
@@ -46,7 +49,7 @@ public class PlayerImagination : MonoBehaviour
 
                 if (ObjectDetected.tag == "Nyaffy")
                 {
-                    //creo la variable para obtener el script del cubo
+                    //creo la variable para obtener el script
                     AlphaManager alphaManager = ObjectDetected.GetComponent<AlphaManager>();
 
                     alphaManager.TransparencyState(true);
@@ -84,4 +87,5 @@ public class PlayerImagination : MonoBehaviour
 
         }
     }
+
 }

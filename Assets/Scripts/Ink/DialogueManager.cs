@@ -77,7 +77,7 @@ public class DialogueManager : MonoBehaviour
 
         //Resetamos los cuadros de texto y nombre para que no guarde nada de otras conversaciones
         displayNameText.text = "???";
-        dialogueBoxAnimator.Play("idleOpen");
+        dialogueBoxAnimator.Play("idleBox");
 
         ContinueStory();
 

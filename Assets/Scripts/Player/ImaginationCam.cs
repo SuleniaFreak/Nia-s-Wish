@@ -37,12 +37,8 @@ public class ImaginationCam : MonoBehaviour
     float mouseX;
     float mouseY;
 
+    Vector3 currentEulerAngles;//en proceso
     #endregion
-
-    private void Awake()
-    {
-        
-    }
 
     private void Update()
     { 
@@ -57,7 +53,6 @@ public class ImaginationCam : MonoBehaviour
     {
         if (!Input.GetMouseButton(1))
         {
-            //restablecer la rotación inicial cuando se deje de pulsar el botón (en proceso)
             return;
         }
         ApplyRotation();
@@ -82,7 +77,9 @@ public class ImaginationCam : MonoBehaviour
         //suavidad de rotación
         currentYRotation = Mathf.SmoothDamp(currentYRotation, desiredYRotation, ref rotationYVelocity, yRotationSpeed);
         currentXRotation = Mathf.SmoothDamp(currentXRotation, desiredXRotation, ref camXVelocity, xCamSpeed);
-        
-        transform.rotation = Quaternion.Euler(currentXRotation, currentYRotation, 0);
+
+        currentEulerAngles = new Vector3(currentXRotation, currentYRotation, 0);
+
+        transform.localEulerAngles = currentEulerAngles;       
     }
 }

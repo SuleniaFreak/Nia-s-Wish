@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Characters")]
     [SerializeField] private GameObject player;
-    [SerializeField] private GameObject nyaffy;//sin usar aún    
+    //[SerializeField] private GameObject nyaffy;//sin usar aún    
 
     [Header("Cinemachine")]
     [SerializeField] private GameObject underHouseCam;//sin usar aún
@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
     void CatcherReferences()
     {
         playerAnim = player.GetComponent<Animator>();//sin usar aún
-        nyaffyAnim = nyaffy.GetComponent<Animator>();//sin usar aún
+       // nyaffyAnim = nyaffy.GetComponent<Animator>();//sin usar aún
 
         //CollectedFlowersEvent
         audioManager = GetComponent<AudioSource>();
@@ -100,7 +100,6 @@ public class GameManager : MonoBehaviour
     {
         numFlowers++;
 
-        //moverlo al event manager si se crea??
         if (numFlowers == 3) //6 será el número final
         {
             StartCoroutine(CollectedFlowersEvent());
