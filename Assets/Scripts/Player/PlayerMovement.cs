@@ -28,7 +28,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //inhabilita el movimiento si hay una conversación y pone animación idle
         if (DialogueManager.GetInstance().dialogueIsPlaying)
-        { 
+        {
             return;
         }
 

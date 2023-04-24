@@ -7,8 +7,9 @@ public class InteractableTrigger : MonoBehaviour
     [Header("Visual Cue")]
     [SerializeField] private GameObject visualCue; //signo para saber que se puede interactuar
 
-    [Header("Ink JSON")]
-    [SerializeField] private TextAsset inkJSON; //Texto que se desplegará
+    [Header("Game Manager")]
+    [SerializeField] private GameObject gameManager;
+    GameManager gameManagerScript;
 
     private bool playerInRange;
 
@@ -16,6 +17,7 @@ public class InteractableTrigger : MonoBehaviour
     {
         playerInRange = false;
         visualCue.SetActive(false);
+        gameManagerScript = gameManager.GetComponent<GameManager>();
     }
 
     private void Update()
@@ -27,7 +29,8 @@ public class InteractableTrigger : MonoBehaviour
 
             if (Input.GetMouseButtonDown(0))
             {
-                DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
+                gameManagerScript.EventStatus();
+                visualCue.SetActive(false);
             }
         }
         else
@@ -35,6 +38,8 @@ public class InteractableTrigger : MonoBehaviour
             visualCue.SetActive(false);
         }
     }
+
+
 
     private void OnTriggerEnter(Collider other)
     {

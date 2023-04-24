@@ -9,12 +9,9 @@ public class Recolectable : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
-        {
-            Debug.Log("primer condicional");
-
-            if (Input.GetKeyDown(KeyCode.Space))
+        {          
+            if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("segundo condicional");
                 gameObject.SetActive(false);
                 gManagerScript.AddFlower();
             }

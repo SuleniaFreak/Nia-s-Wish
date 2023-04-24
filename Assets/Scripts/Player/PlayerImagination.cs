@@ -57,7 +57,6 @@ public class PlayerImagination : MonoBehaviour
                     Debug.Log("He comprobado que la etiqueta sea Nyaffy");
                 }
 
-                Debug.Log("He chocado con alguien con layer Hidden");
                 Debug.Log(hit.collider.gameObject);
 
             }

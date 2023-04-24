@@ -11,17 +11,18 @@ public class AlphaManager : MonoBehaviour
     private Color colorBase;
     private Color colorFace;
     bool isShowing;
+    bool isAlphaComplete;
+
     private void Awake()
     {
         colorBase = nyaffyBase.color;
-
+        isAlphaComplete = false;
     }
 
     private void Start()
     {
         colorBase.a = 0f;
         nyaffyBase.color = colorBase;
-
         colorFace.a = 0f;
         colorFace = Color.white;
         nyaffyFace.color = colorFace;
@@ -35,6 +36,11 @@ public class AlphaManager : MonoBehaviour
     public void TransparencyState(bool showing)
     {
         isShowing = showing;
+    }
+
+    public bool isAphaMax()
+    {
+        return isAlphaComplete;
     }
 
     void AlphaManagement()
@@ -54,6 +60,7 @@ public class AlphaManager : MonoBehaviour
         {
             colorBase.a = 1f;
             colorFace.a = 1f;
+            isAlphaComplete = true;
         }
         else if (colorBase.a <= 0f)
         {
@@ -62,5 +69,13 @@ public class AlphaManager : MonoBehaviour
         }
         nyaffyBase.color = colorBase;
         nyaffyFace.color = colorFace;
+    }
+
+    //método que será llamado desde una animación del Nyaffy
+    public void ResetTransparency()
+    {
+        colorBase.a = 0;
+        colorFace.a = 0;
+        isAlphaComplete = false;
     }
 }

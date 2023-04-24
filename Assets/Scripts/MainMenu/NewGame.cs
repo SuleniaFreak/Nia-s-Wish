@@ -74,7 +74,6 @@ public class NewGame : MonoBehaviour
         DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
     }
 
-
     public void SetPlayerCam()
     {
         camPriority = introCam.gameObject.GetComponent<CinemachineVirtualCamera>();
