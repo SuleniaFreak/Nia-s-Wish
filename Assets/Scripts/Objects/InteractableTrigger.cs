@@ -5,7 +5,7 @@ using UnityEngine;
 public class InteractableTrigger : MonoBehaviour
 {
     [Header("Visual Cue")]
-    [SerializeField] private GameObject visualCue; //signo para saber que se puede interactuar
+    [SerializeField] private GameObject visualCue;
 
     [Header("Game Manager")]
     [SerializeField] private GameObject gameManager;
@@ -22,7 +22,6 @@ public class InteractableTrigger : MonoBehaviour
 
     private void Update()
     {
-        //si el player está en rango y no hay una conversación pasando
         if (playerInRange && !DialogueManager.GetInstance().dialogueIsPlaying)
         {
             visualCue.SetActive(true);

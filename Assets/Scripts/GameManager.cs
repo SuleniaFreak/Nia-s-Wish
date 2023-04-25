@@ -29,10 +29,6 @@ public class GameManager : MonoBehaviour
     [Header("Panels")]
     [SerializeField] private GameObject tutoPanel;
     [SerializeField] private GameObject fishPanel;
-   // [SerializeField] private GameObject thanksPanel; pendiente de quitar
-
-  
-
 
     #region JSON_Files
     [Header("Collected flowers Event")]
@@ -59,8 +55,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextAsset inkJSONWhatIsThis;
 
     [Header("Final Event")]
-    [SerializeField] private TextAsset inkJSONFishCathched; //sin usar aún
-    [SerializeField] private TextAsset inkJSONChaseTheCat; //sin usar aún
+    [SerializeField] private TextAsset inkJSONFishCathched;
+    [SerializeField] private TextAsset inkJSONChaseTheCat;
 
     #endregion
 
@@ -70,7 +66,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Characters Components")]
     Animator playerAnim;
-    int playerSpeed = 5;//en pruebas
+    int playerSpeed = 10;//en pruebas
     PlayerImagination playerImaginationScript;
     PlayerMovement playerMovementScript;
     Animator nyaffyAnim; //sin usar aún
@@ -85,7 +81,6 @@ public class GameManager : MonoBehaviour
     int numFlowers = 0;
 
     [Header("Bools")]
-    bool cinematicCheck;
     bool isRButtonPressed;
     bool isTutoPanelShowing;
 
@@ -125,7 +120,7 @@ public class GameManager : MonoBehaviour
         //NyaffyFirstAppearance
         nyaffyAnim = nyaffy.GetComponent<Animator>();
         nyaffyAlphaManager = nyaffy.GetComponent<AlphaManager>();
-        nyaffyMovementScript = nyaffy.GetComponent<NyaffyMovement>();//en proceso
+        nyaffyMovementScript = nyaffy.GetComponent<NyaffyMovement>();
 
     }
 
@@ -166,11 +161,11 @@ public class GameManager : MonoBehaviour
         {
             StartCoroutine(CropsEvent());
         }
-        else if (isFoundNyaffyEventReady) //en revisión
+        else if (isFoundNyaffyEventReady)
         {
             StartCoroutine(FoundNyaffyEvent());
         }
-        else if(isFinalEventReady) //en revisión
+        else if (isFinalEventReady)
         {
             StartCoroutine(FinalEvent());
         }
@@ -207,17 +202,18 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         StartDialogue(inkJSONSurprise);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
+        yield return new WaitForSeconds(3f); //en pruebas
         audioManager.PlayOneShot(bell2);
         yield return new WaitForSeconds(1f);
         StartDialogue(inkJSONSurprise2);
+        bellSoundBox.SetActive(true);
+        yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         //giro muy brusco, pendiente de mejora (pero funciona)
         //posible cambio de cámara con cinemachine sino se encuentra algo más fluido
         player.gameObject.transform.LookAt(bellSoundBox.transform);
-        bellSoundBox.SetActive(true);
-        yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        //mejorar la recepción y distancia del sonido (pendiente)
+        //mejorar la recepción y distancia del sonido (esperando a la clase/video de sonido)
         bellFull.Play();
-        isHouseEventReady = true; //en proceso
+        isHouseEventReady = true;
         StopAllCoroutines();
     }
 
@@ -240,66 +236,60 @@ public class GameManager : MonoBehaviour
         StartCoroutine(NyaffyFirstAppearence());
     }
 
-    //Evento que se ejecutará al encontrar al Nyaffy por primera vez (en proceso)
+    //Evento que se ejecutará al encontrar al Nyaffy por primera vez
     IEnumerator NyaffyFirstAppearence() //(90% completado) pendiente de revisión
     {
         isHouseEventReady = false;
         nyaffy.transform.LookAt(underHouseCam.transform);
-        StartDialogue(inkJSONCouldBeACat); //mensaje de "es un gato"
+        StartDialogue(inkJSONCouldBeACat);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        StartCoroutine(nyaffyMovementScript.FirstTranslation()); //traslado al Nyaffy
+        StartCoroutine(nyaffyMovementScript.FirstTranslation());
         yield return new WaitForSeconds(1f);
-        StartDialogue(inkJSONWhereTheCatGoes);//mensaje de "oye a donde vas?
+        StartDialogue(inkJSONWhereTheCatGoes);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         underHouseCam.SetActive(false);
         yield return new WaitForSeconds(2f);
         playerAnim.Play("CrouchedToStand");
-        StartDialogue(inkJSONFollowTheCat); //mensaje de "ha ido hacia los cultivos"
+        StartDialogue(inkJSONFollowTheCat);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         playerMovementScript.enabled = true;
-        playerImaginationScript.enabled = true;//script de imaginación de Nia Activado
-        isCropsEventReady = true; //pendiente de quitar?
+        playerImaginationScript.enabled = true;
+        isCropsEventReady = true;
         cropsColliderBox.SetActive(true);
         yield return new WaitForSeconds(2f);
 
     }
-    //Evento que se activará al entrar en un collider cerca de los cultivos (en proceso)
-    public IEnumerator CropsEvent() //(90% completado)
+    //Evento que se activará al entrar en un collider cerca de los cultivos
+    public IEnumerator CropsEvent() //(Completado, falta pulir y añadir sonidos, particulas, etc)
     {
         nyaffy.transform.LookAt(player.transform);
-        StartDialogue(inkJSONDoNotEatCrops); //mensaje del player "eso no es para ti"
+        StartDialogue(inkJSONDoNotEatCrops);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        StartCoroutine(nyaffyMovementScript.SecondTranslation()); //iniciamos el siguiente movimiento del nyaffy
+        StartCoroutine(nyaffyMovementScript.SecondTranslation());
         yield return new WaitForSeconds(1f);
         //animación de confusión?
-        StartDialogue(inkJSONMissedNyaffy); //mensaje del player "a buscar al gato"
+        StartDialogue(inkJSONMissedNyaffy);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         yield return new WaitForSeconds(3f);
         StartDialogue(inkJSONExtraInfoFindNyaffy);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        nyaffyAreaColliderBox.SetActive(true); //activamos el area para encontrar el Nyaffy
-        isCropsEventReady = false; //el evento ha terminado
+        nyaffyAreaColliderBox.SetActive(true);
+        isCropsEventReady = false;
         isFoundNyaffyEventReady = true;
-        Debug.Log("Se ha activado el bool y esperamos hasta encontrar al gato de nuevo");
         yield return new WaitUntil(nyaffyAlphaManager.isAphaMax);
-        Debug.Log("El nyaffy está con alfa al máximo");
         EventStatus();
-
-        Debug.Log("He terminado la corrutina Crops");
     }
-    //Evento que se ejecutará cuando encuentres al nyaffy por segunda vez (pendiente)
-    IEnumerator FoundNyaffyEvent()
+    //Evento que se ejecutará cuando encuentres al nyaffy por segunda vez
+    IEnumerator FoundNyaffyEvent() //Completado, pendiente de pulir y meter particulas, sonidos, etc
     {
-
-        Debug.Log("He encontrado al gato por segunda vez");
         nyaffyAreaColliderBox.SetActive(false);
-        finalEventColliderBox.SetActive(true); //evento de salida de la escena
-        nyaffy.transform.LookAt(player.transform); //el nyaffy mira al player
+        finalEventColliderBox.SetActive(true);
+        nyaffy.transform.LookAt(player.transform);
         //el nyaffy ejecuta una animación (pendiente)
-        StartDialogue(inkJSONFoundNyaffy); //dialogo "gato encontrado"
+        StartDialogue(inkJSONFoundNyaffy);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        StartCoroutine(nyaffyMovementScript.FinalTranslation()); //corrutina movimiento final del nyaffy
-        StartDialogue(inkJSONWhatIsThis); //mensaje del player de "a donde vas?"
+        StartCoroutine(nyaffyMovementScript.FinalTranslation());
+        StartDialogue(inkJSONWhatIsThis);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         isFoundNyaffyEventReady = false;
         isFinalEventReady = true;
@@ -313,10 +303,12 @@ public class GameManager : MonoBehaviour
         fishPanel.SetActive(true);
         yield return new WaitForSeconds(2f);
         fishPanel.SetActive(false);
+        yield return new WaitForSeconds(0.5f);
         StartDialogue(inkJSONFishCathched);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
+        player.transform.LookAt(nyaffy.transform); //en pruebas
         StartDialogue(inkJSONChaseTheCat);
-        yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
+        // yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         StartCoroutine(AutoPlayerMove());
         //Si llego hasta aquí.......
         Debug.Log("Ruta de personaje terminada!!!!!!!!");
@@ -327,21 +319,17 @@ public class GameManager : MonoBehaviour
     //corrutina que llevará al player automáticamente al final de la demo (podria cambiar a cambio de escena)
     IEnumerator AutoPlayerMove()
     {
-        Debug.Log("He hecho que el player se mueva solo hacia el collider final");
-        player.transform.LookAt(finalEventColliderBox.transform);
-        
-        while (player.transform.position != finalEventColliderBox.transform.position)
-        { 
-            playerAnim.Play("Run");
-            player.transform.position = Vector3.MoveTowards(player.transform.position, finalEventColliderBox.transform.position, playerSpeed * Time.deltaTime);
-            yield return null; //espera al siguiente frame
-        }
-        //if (player.transform.position == finalEventColliderBox.transform.position)
-        //{
-        //    player.SetActive(false);
-        //    thanksPanel.SetActive(true);
 
-        //}
+        playerMovementScript.enabled = false;
+
+        while (player.transform.position != finalEventColliderBox.transform.position)
+        {
+            playerAnim.SetBool("IsRunning", true);
+            player.transform.position = Vector3.MoveTowards(player.transform.position, finalEventColliderBox.transform.position, playerSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        playerAnim.SetBool("IsRunning", false);
     }
 
 

@@ -12,13 +12,10 @@ public class NyaffyMovement : MonoBehaviour
     [Header("Characters and Objects")]
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject fishFigure;
-
     #endregion
 
-    #region Private_Variables
     Animator anim;
-    #endregion
-
+   
     private void Awake()
     {
         CatcherReferences();
@@ -35,7 +32,7 @@ public class NyaffyMovement : MonoBehaviour
     public IEnumerator FirstTranslation() //(Completado)
     {
         transform.LookAt(destinySpots[0].position);
-        //sonido de cascabel
+        //sonido de cascabel?
         while (transform.position != destinySpots[0].position)
         {
             anim.Play("Walk");
@@ -60,17 +57,16 @@ public class NyaffyMovement : MonoBehaviour
         yield return null;
     }
 
-    public IEnumerator FinalTranslation() //En proceso
+    public IEnumerator FinalTranslation() //Completado
     {
         transform.LookAt(destinySpots[2].position);
-        fishFigure.SetActive(true); //suelta el pez
+        fishFigure.SetActive(true);
         while (transform.position != destinySpots[2].position) 
         {
             anim.Play("Walk");
             transform.position = Vector3.MoveTowards(transform.position, destinySpots[2].position, walkSpeed * Time.deltaTime);
             yield return null; //espera al siguiente frame
         }
-        //desactivar al gato?
     }
     #endregion
 

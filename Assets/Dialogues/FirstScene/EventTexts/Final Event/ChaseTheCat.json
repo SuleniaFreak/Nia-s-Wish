@@ -1,1 +1,1 @@
-﻿{"inkVersion":20,"root":[[{"->":"Main"},["done",{"#f":5,"#n":"g-0"}],null],"done",{"Main":["^Gatito!! Espera!! speaker: Nia","\n","^Se te ha caido el pez!","\n","end",{"#f":1}],"#f":1}],"listDefs":{}}
+﻿{"inkVersion":20,"root":[[{"->":"Main"},["done",{"#f":5,"#n":"g-0"}],null],"done",{"Main":["^Se te ha caido el pez!",{"#":"speaker: Nia"},"\n","end",{"#f":1}],"#f":1}],"listDefs":{}}

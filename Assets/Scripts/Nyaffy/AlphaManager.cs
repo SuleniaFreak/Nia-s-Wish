@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class AlphaManager : MonoBehaviour
 {
+    #region Public_Variables
     [Header("Changeable Materials")]
     [SerializeField] private Material nyaffyBase;
     [SerializeField] private Material nyaffyFace;
 
+    [Header("Particle Systems")]
+    [SerializeField] private GameObject TransparentParticleSystem;
+    #endregion
+
+    #region Private_Particles
+    [Header("Materials")]
     private Color colorBase;
     private Color colorFace;
+
+    [Header("Bools")]
     bool isShowing;
     bool isAlphaComplete;
+    #endregion
 
     private void Awake()
     {
@@ -43,17 +53,21 @@ public class AlphaManager : MonoBehaviour
         return isAlphaComplete;
     }
 
+    //pendiente de mejorar el material para que se vea más claro y medir el tiempo de aparición
     void AlphaManagement()
     {
         if (isShowing)
         {
             colorBase.a += 0.2f * Time.deltaTime;
             colorFace.a += 0.2f * Time.deltaTime;
+            TransparentParticleSystem.SetActive(true); 
         }
         else if (!isShowing && colorBase.a < 1f)
         {
             colorBase.a -= 0.2f * Time.deltaTime;
             colorFace.a -= 0.2f * Time.deltaTime;
+            TransparentParticleSystem.SetActive(false); 
+
         }
 
         if (colorBase.a >= 1f)
@@ -61,6 +75,8 @@ public class AlphaManager : MonoBehaviour
             colorBase.a = 1f;
             colorFace.a = 1f;
             isAlphaComplete = true;
+            TransparentParticleSystem.SetActive(false);
+            //sistema de particulas adicional o sonido de que se ha completado (o ambos)
         }
         else if (colorBase.a <= 0f)
         {
@@ -77,5 +93,6 @@ public class AlphaManager : MonoBehaviour
         colorBase.a = 0;
         colorFace.a = 0;
         isAlphaComplete = false;
+        //pendiente de un sistema de particulas (por determinar si aquí o en la animación)
     }
 }

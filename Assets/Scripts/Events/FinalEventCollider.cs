@@ -15,7 +15,7 @@ public class FinalEventCollider : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            player.SetActive(false);
+            //player.SetActive(false);
             thanksPanel.SetActive(true);
         }
     }

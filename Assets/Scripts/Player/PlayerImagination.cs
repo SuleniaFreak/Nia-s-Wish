@@ -5,6 +5,9 @@ using Cinemachine;
 
 public class PlayerImagination : MonoBehaviour
 {
+
+
+
     [Header("Raycast Settings")]
     Ray ray;
     RaycastHit hit;
@@ -15,13 +18,15 @@ public class PlayerImagination : MonoBehaviour
     CinemachineVirtualCamera virtualCamera;
     PlayerMovement playerMovement;
 
-    [Header("Nyaffy material settings")]
-    Color colorAlpha; //gestiona el alfa del color del nyaffy
-    Material objectColor; //gestiona el material del nyaffy
+    [Header("Animator")]
+    Animator playerAnim; //en pruebas
+
+   
     void Start()
     {
         virtualCamera = transform.GetComponent<CinemachineVirtualCamera>();
         playerMovement = GetComponentInParent<PlayerMovement>();
+        playerAnim = GetComponentInParent<Animator>();// en pruebas
     }
 
     void Update()
@@ -39,6 +44,7 @@ public class PlayerImagination : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             playerMovement.enabled = false;
+            playerAnim.SetBool("IsRunning", false); //en pruebas
             Cursor.lockState = CursorLockMode.Locked;
             virtualCamera.Priority = 25;
 

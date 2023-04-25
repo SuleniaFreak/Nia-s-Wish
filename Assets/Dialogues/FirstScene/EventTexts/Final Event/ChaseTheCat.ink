@@ -1,6 +1,5 @@
 ->Main
 
 == Main ==
-Gatito!! Espera!! speaker: Nia
-Se te ha caido el pez!
+Se te ha caido el pez!#speaker: Nia
 ->END

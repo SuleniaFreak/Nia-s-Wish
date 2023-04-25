@@ -8,23 +8,25 @@ public class DialogueManager : MonoBehaviour
 {
     private static DialogueManager instance;
 
+    #region Public_Variables
     [Header("Dialogue UI")]
-    [SerializeField] private GameObject dialogueBox;// panel de dialogo
-    [SerializeField] private TextMeshProUGUI dialogueText; //texto de dialogo
+    [SerializeField] private GameObject dialogueBox;
+    [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private TextMeshProUGUI displayNameText; //texto de quien habla
     private Animator dialogueBoxAnimator; //cambia de animación del panel de dialogo
 
     [Header("New Game Button")]
     [SerializeField] private NewGame newGameButton;
+    #endregion
 
-
-    //Variable para usar el archivo JSON del dialogo
-    private Story currentStory;
-    public bool dialogueIsPlaying; //chequeamos si el dialogo está activo
+    #region Private_Variables
+    private Story currentStory;//Variable para usar el archivo JSON del dialogo
+    public bool dialogueIsPlaying;
 
     [Header("Tags Management")]
     private const string SPEAKER_TAG = "speaker";
     private const string LAYOUT_TAG = "layout";
+    #endregion
 
     private void Awake()
     {
@@ -47,7 +49,6 @@ public class DialogueManager : MonoBehaviour
         dialogueIsPlaying = false;
         dialogueBox.SetActive(false);
         dialogueBoxAnimator = dialogueBox.GetComponent<Animator>();
-
 
     }
 
@@ -96,7 +97,7 @@ public class DialogueManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
         dialogueIsPlaying = false;
-        dialogueBox.SetActive(false); //pendiente de ver si con evento de animacion funciona igual
+        dialogueBox.SetActive(false);
         dialogueText.text = "";
 
     }
@@ -109,7 +110,7 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText.text = currentStory.Continue();
 
-            //llamada al método que gestionará los tags en inky 
+            //llamada al método que gestionará los tags de inky 
             HandleTags(currentStory.currentTags);
         }
         else
@@ -152,7 +153,7 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case LAYOUT_TAG:
                     dialogueBoxAnimator.Play(tagValue); //ejecutará las animaciones según el tag en ink
-                                                        // Debug.Log("layout=" + tagValue);
+                    // Debug.Log("layout=" + tagValue);
                     break;
             }
 

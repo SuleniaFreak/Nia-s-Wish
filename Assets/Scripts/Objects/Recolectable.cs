@@ -4,18 +4,59 @@ using UnityEngine;
 
 public class Recolectable : MonoBehaviour
 {
-    [SerializeField] private GameManager gManagerScript;
+    [Header("Visual Cue")]
+    [SerializeField] private GameObject visualCue;
 
-    private void OnTriggerStay(Collider other)
+    [Header("Game Manager")]
+    [SerializeField] private GameObject gameManager;
+    GameManager gameManagerScript;
+
+    private bool playerInRange;
+
+    private void Awake()
     {
-        if (other.gameObject.CompareTag("Player"))
-        {          
+        playerInRange = false;
+        visualCue.SetActive(false);
+        gameManagerScript = gameManager.GetComponent<GameManager>();
+    }
+
+    private void Update()
+    {
+        if (playerInRange && !DialogueManager.GetInstance().dialogueIsPlaying)
+        {
+            visualCue.SetActive(true);
+
             if (Input.GetMouseButtonDown(0))
             {
+                gameManagerScript.EventStatus();
+                visualCue.SetActive(false);
                 gameObject.SetActive(false);
-                gManagerScript.AddFlower();
+                gameManagerScript.AddFlower();
             }
-
+        }
+        else
+        {
+            visualCue.SetActive(false);
         }
     }
+
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            playerInRange = false;
+        }
+    }
+
+
 }

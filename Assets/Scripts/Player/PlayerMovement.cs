@@ -14,7 +14,6 @@ public class PlayerMovement : MonoBehaviour
     Collider col;
 
     Animator anim;
-    Vector3 movement;
     float h, v;
     void Start()
     {
@@ -26,9 +25,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        //inhabilita el movimiento si hay una conversación y pone animación idle
+        //inhabilita el movimiento si hay una conversación
         if (DialogueManager.GetInstance().dialogueIsPlaying)
         {
+            anim.SetBool("IsRunning", false);
             return;
         }
 
