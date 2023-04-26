@@ -8,6 +8,7 @@ public class AlphaManager : MonoBehaviour
     [Header("Changeable Materials")]
     [SerializeField] private Material nyaffyBase;
     [SerializeField] private Material nyaffyFace;
+    [SerializeField] private Material nyaffyAlphaMax; //en pruebas
 
     [Header("Particle Systems")]
     [SerializeField] private GameObject TransparentParticleSystem;
@@ -29,18 +30,25 @@ public class AlphaManager : MonoBehaviour
         isAlphaComplete = false;
     }
 
+   
+ 
     private void Start()
+    {
+        SettingColors();
+    }
+
+    void Update()
+    {
+        AlphaManagement();
+    }
+
+    void SettingColors()
     {
         colorBase.a = 0f;
         nyaffyBase.color = colorBase;
         colorFace.a = 0f;
         colorFace = Color.white;
         nyaffyFace.color = colorFace;
-    }
-
-    void Update()
-    {
-        AlphaManagement();
     }
 
     public void TransparencyState(bool showing)
@@ -60,14 +68,13 @@ public class AlphaManager : MonoBehaviour
         {
             colorBase.a += 0.2f * Time.deltaTime;
             colorFace.a += 0.2f * Time.deltaTime;
-            TransparentParticleSystem.SetActive(true); 
+            TransparentParticleSystem.SetActive(true);
         }
         else if (!isShowing && colorBase.a < 1f)
         {
             colorBase.a -= 0.2f * Time.deltaTime;
             colorFace.a -= 0.2f * Time.deltaTime;
-            TransparentParticleSystem.SetActive(false); 
-
+            TransparentParticleSystem.SetActive(false);
         }
 
         if (colorBase.a >= 1f)
@@ -93,6 +100,7 @@ public class AlphaManager : MonoBehaviour
         colorBase.a = 0;
         colorFace.a = 0;
         isAlphaComplete = false;
+
         //pendiente de un sistema de particulas (por determinar si aquí o en la animación)
     }
 }

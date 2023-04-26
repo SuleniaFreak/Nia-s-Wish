@@ -9,6 +9,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float turnSpeed;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource AudioS; // en puebas
+    [SerializeField] private AudioClip GrassSteps; //en pruebas
+
     [Header("Intro Settings")]
     Rigidbody rb;
     Collider col;
@@ -21,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
         anim.Play("Sitting");
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
+        AudioS = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -55,6 +60,11 @@ public class PlayerMovement : MonoBehaviour
         {
             anim.SetBool("IsRunning", false);
         }
+    }
+
+    public void soundStep() //en pruebas
+    {
+        AudioS.Play();
     }
 
     #region IntroMethods

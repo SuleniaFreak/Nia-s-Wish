@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
     {
         numFlowers++;
 
-        if (numFlowers == 3) //6 será el número final
+        if (numFlowers == 6)
         {
             StartCoroutine(CollectedFlowersEvent());
         }
@@ -202,19 +202,18 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         StartDialogue(inkJSONSurprise);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        yield return new WaitForSeconds(3f); //en pruebas
+        yield return new WaitForSeconds(2f);
         audioManager.PlayOneShot(bell2);
         yield return new WaitForSeconds(1f);
+        //giro muy brusco, pendiente de mejora (pero funciona)
+        //posible cambio de cámara con cinemachine sino se encuentra algo más fluido
+        player.gameObject.transform.LookAt(nyaffy.transform);
         StartDialogue(inkJSONSurprise2);
         bellSoundBox.SetActive(true);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        //giro muy brusco, pendiente de mejora (pero funciona)
-        //posible cambio de cámara con cinemachine sino se encuentra algo más fluido
-        player.gameObject.transform.LookAt(bellSoundBox.transform);
         //mejorar la recepción y distancia del sonido (esperando a la clase/video de sonido)
         bellFull.Play();
         isHouseEventReady = true;
-        StopAllCoroutines();
     }
 
     //Evento que se ejecutará al interactuar con el collider de detrás de la casa (completado, falta pulir)
@@ -283,7 +282,6 @@ public class GameManager : MonoBehaviour
     IEnumerator FoundNyaffyEvent() //Completado, pendiente de pulir y meter particulas, sonidos, etc
     {
         nyaffyAreaColliderBox.SetActive(false);
-        finalEventColliderBox.SetActive(true);
         nyaffy.transform.LookAt(player.transform);
         //el nyaffy ejecuta una animación (pendiente)
         StartDialogue(inkJSONFoundNyaffy);
@@ -299,16 +297,18 @@ public class GameManager : MonoBehaviour
     //Evento que se ejecutará cuando el player recoja el pez
     IEnumerator FinalEvent()
     {
+        finalEventColliderBox.SetActive(true);
+        playerMovementScript.enabled = false;
         fishfigure.SetActive(false);
         fishPanel.SetActive(true);
         yield return new WaitForSeconds(2f);
         fishPanel.SetActive(false);
         yield return new WaitForSeconds(0.5f);
+        playerMovementScript.enabled = true;
+        player.transform.LookAt(nyaffy.transform); //en pruebas
         StartDialogue(inkJSONFishCathched);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        player.transform.LookAt(nyaffy.transform); //en pruebas
         StartDialogue(inkJSONChaseTheCat);
-        // yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         StartCoroutine(AutoPlayerMove());
         //Si llego hasta aquí.......
         Debug.Log("Ruta de personaje terminada!!!!!!!!");
