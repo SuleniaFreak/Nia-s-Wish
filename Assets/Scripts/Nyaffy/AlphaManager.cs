@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using KrillAudio.Krilloud;
 
 public class AlphaManager : MonoBehaviour
 {
@@ -22,12 +23,16 @@ public class AlphaManager : MonoBehaviour
     [Header("Bools")]
     bool isShowing;
     bool isAlphaComplete;
+
+    [Header("Audio")]
+    KLAudioSource source;
     #endregion
 
     private void Awake()
     {
         colorBase = nyaffyBase.color;
         isAlphaComplete = false;
+        source = GetComponent<KLAudioSource>();
     }
 
    
@@ -83,7 +88,6 @@ public class AlphaManager : MonoBehaviour
             colorFace.a = 1f;
             isAlphaComplete = true;
             TransparentParticleSystem.SetActive(false);
-            //sistema de particulas adicional o sonido de que se ha completado (o ambos)
         }
         else if (colorBase.a <= 0f)
         {
@@ -94,13 +98,26 @@ public class AlphaManager : MonoBehaviour
         nyaffyFace.color = colorFace;
     }
 
+
+    #region on_animation_methods
     //método que será llamado desde una animación del Nyaffy
     public void ResetTransparency()
     {
+        source.SetFloatVar(KL.Variables.nyaffymode, 2);//en pruebas
+        source.Play(KL.Tags.nyaffymovement); // en pruebas
         colorBase.a = 0;
         colorFace.a = 0;
         isAlphaComplete = false;
 
         //pendiente de un sistema de particulas (por determinar si aquí o en la animación)
     }
+
+    //método en pruebas
+    public void Jumping()
+    {
+        source.SetFloatVar(KL.Variables.nyaffymode, 3);
+        source.Play(KL.Tags.nyaffymovement);
+    }
+
+    #endregion
 }

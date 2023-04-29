@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Ink.Runtime;
+using KrillAudio.Krilloud;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -26,6 +27,9 @@ public class DialogueManager : MonoBehaviour
     [Header("Tags Management")]
     private const string SPEAKER_TAG = "speaker";
     private const string LAYOUT_TAG = "layout";
+
+    [Header("Krilloud")]
+    KLAudioSource source;
     #endregion
 
     private void Awake()
@@ -36,6 +40,8 @@ public class DialogueManager : MonoBehaviour
             Debug.LogWarning("Hay más de un DialogueManager en la escena");
         }
         instance = this;
+
+        source = GetComponent<KLAudioSource>(); //en pruebas
     }
 
     //método que devuelve el singleton
@@ -63,6 +69,7 @@ public class DialogueManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             ContinueStory();
+            source.Play();//en pruebas
         }
     }
 
@@ -75,6 +82,8 @@ public class DialogueManager : MonoBehaviour
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialogueBox.SetActive(true);
+        source.SetFloatVar(KL.Variables.panelmode, 0);
+        source.Play(); 
 
         //Resetamos los cuadros de texto y nombre para que no guarde nada de otras conversaciones
         displayNameText.text = "???";
@@ -87,6 +96,8 @@ public class DialogueManager : MonoBehaviour
     //método para cerrar el dialogo si ha terminado el texto
     private IEnumerator ExitDialogueMode()
     {
+        source.SetFloatVar(KL.Variables.panelmode, 1);
+        source.Play(); 
         if (newGameButton.isIntroPlaying)
         {
             dialogueBoxAnimator.Play("introClose");

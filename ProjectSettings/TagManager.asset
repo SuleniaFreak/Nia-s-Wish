@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Nyaffy
+  - wood
+  - grass
+  - recolectable
+  - canvas
   layers:
   - Default
   - TransparentFX

@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using KrillAudio.Krilloud;
 
 public class NyaffyAreaColliderTrigger : MonoBehaviour
 {
     #region Public_Variables
     [Header("Game Manager")]
     [SerializeField] private GameObject gameManager;
+
+    [Header("Nyaffy")]
+    [SerializeField] private GameObject nyaffy;
 
     [Header("Ink JSON Files")]
     [SerializeField] private TextAsset inkJSONCanHearTheBell;
@@ -15,13 +19,13 @@ public class NyaffyAreaColliderTrigger : MonoBehaviour
 
     #region Private_Variables
     GameManager gManager;
-    AudioSource audioS;
+
     #endregion
 
     private void Awake()
     {
         gManager = gameManager.GetComponent<GameManager>();
-        audioS = GetComponent<AudioSource>();
+       
 
     }
 
@@ -29,9 +33,8 @@ public class NyaffyAreaColliderTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-
             gManager.StartDialogue(inkJSONCanHearTheBell);
-            audioS.Play();
+            nyaffy.SetActive(true);
 
         }
     }
@@ -42,7 +45,7 @@ public class NyaffyAreaColliderTrigger : MonoBehaviour
         {
 
             gManager.StartDialogue(inkJSONCannotHearTheBell);
-            audioS.Stop();
+            nyaffy.SetActive(false);
 
         }
     }

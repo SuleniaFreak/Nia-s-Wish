@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using KrillAudio.Krilloud;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -10,8 +11,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float turnSpeed;
 
     [Header("Audio")]
-    [SerializeField] private AudioSource AudioS; // en puebas
-    [SerializeField] private AudioClip GrassSteps; //en pruebas
+    KLAudioSource source; //en pruebas
+    float valueMaterial; //en pruebas
 
     [Header("Intro Settings")]
     Rigidbody rb;
@@ -25,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
         anim.Play("Sitting");
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
-        AudioS = GetComponent<AudioSource>();
+        source = GetComponent<KLAudioSource>();
     }
 
     void Update()
@@ -50,6 +51,7 @@ public class PlayerMovement : MonoBehaviour
        
     }
 
+    #region sound_and_animation_methods
     void Animating()
     {
         if (h != 0 || v != 0)
@@ -64,8 +66,25 @@ public class PlayerMovement : MonoBehaviour
 
     public void soundStep() //en pruebas
     {
-        AudioS.Play();
+        source.Stop();
+        source.SetFloatVar(KL.Variables.steps, valueMaterial);
+        source.Play();
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        switch (collision.gameObject.tag)
+        {
+            case "grass":
+                valueMaterial = 0;
+                break;
+            case "wood":
+                valueMaterial = 1;
+                break;
+        }
+    }
+
+    #endregion
 
     #region IntroMethods
 

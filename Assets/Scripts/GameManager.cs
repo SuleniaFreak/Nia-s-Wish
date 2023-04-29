@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using KrillAudio.Krilloud;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,10 +22,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Cinemachine")]
     [SerializeField] private GameObject underHouseCam;
-
-    [Header("SFX Files")]
-    [SerializeField] private AudioClip bell1;
-    [SerializeField] private AudioClip bell2;
 
     [Header("Panels")]
     [SerializeField] private GameObject tutoPanel;
@@ -66,7 +63,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Characters Components")]
     Animator playerAnim;
-    int playerSpeed = 10;//en pruebas
+    int playerSpeed = 10;
     PlayerImagination playerImaginationScript;
     PlayerMovement playerMovementScript;
     Animator nyaffyAnim; //sin usar aún
@@ -74,8 +71,8 @@ public class GameManager : MonoBehaviour
     NyaffyMovement nyaffyMovementScript;
 
     [Header("Audio")]
-    AudioSource audioManager;
-    AudioSource bellFull;
+    KLAudioSource source; //en pruebas
+    KLAudioSource nyaffySource; //en pruebas
 
     [Header("Flowers Counter")]
     int numFlowers = 0;
@@ -108,10 +105,7 @@ public class GameManager : MonoBehaviour
     void CatcherReferences()
     {
         playerAnim = player.GetComponent<Animator>();
-
-        //CollectedFlowersEvent
-        audioManager = GetComponent<AudioSource>();
-        bellFull = bellSoundBox.GetComponent<AudioSource>();
+        source = GetComponent<KLAudioSource>(); //en pruebas
 
         //BackHouseEvent
         playerImaginationScript = player.gameObject.GetComponentInChildren<PlayerImagination>();
@@ -121,6 +115,7 @@ public class GameManager : MonoBehaviour
         nyaffyAnim = nyaffy.GetComponent<Animator>();
         nyaffyAlphaManager = nyaffy.GetComponent<AlphaManager>();
         nyaffyMovementScript = nyaffy.GetComponent<NyaffyMovement>();
+        nyaffySource = nyaffy.GetComponent<KLAudioSource>();
 
     }
 
@@ -142,10 +137,17 @@ public class GameManager : MonoBehaviour
     #region Trigger_Methods
     public void AddFlower()
     {
+        //en pruebas
+        source.SetFloatVar(KL.Variables.pickup, 0);
+        source.Play(KL.Tags.recolectable);
         numFlowers++;
 
         if (numFlowers == 6)
         {
+            //en pruebas
+            source.Stop();
+            source.SetFloatVar(KL.Variables.pickup, 1);
+            source.Play(KL.Tags.recolectable);
             StartCoroutine(CollectedFlowersEvent());
         }
     }
@@ -198,12 +200,13 @@ public class GameManager : MonoBehaviour
     {
         StartDialogue(inkJSONFlowers);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        audioManager.PlayOneShot(bell1);
+        source.SetFloatVar(KL.Variables.nyaffymode, 4); //en pruebas
+        source.Play(KL.Tags.nyaffymovement);//en pruebas
         yield return new WaitForSeconds(1f);
         StartDialogue(inkJSONSurprise);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         yield return new WaitForSeconds(2f);
-        audioManager.PlayOneShot(bell2);
+        source.Play(KL.Tags.nyaffymovement); // en pruebas
         yield return new WaitForSeconds(1f);
         //giro muy brusco, pendiente de mejora (pero funciona)
         //posible cambio de cámara con cinemachine sino se encuentra algo más fluido
@@ -212,14 +215,14 @@ public class GameManager : MonoBehaviour
         bellSoundBox.SetActive(true);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         //mejorar la recepción y distancia del sonido (esperando a la clase/video de sonido)
-        bellFull.Play();
+        nyaffy.SetActive(true); //en pruebas
         isHouseEventReady = true;
     }
 
     //Evento que se ejecutará al interactuar con el collider de detrás de la casa (completado, falta pulir)
     IEnumerator BackHouseEvent()
     {
-        bellFull.Stop();
+        nyaffySource.Stop();// en pruebas
         player.transform.LookAt(house.transform);
         bellSoundBox.SetActive(false);
         playerMovementScript.enabled = false;
@@ -228,10 +231,12 @@ public class GameManager : MonoBehaviour
         playerAnim.Play("StandToCrouch");
         StartDialogue(inkJSONBackHouse2);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        tutoPanel.SetActive(true); //añadir sonidito al aparecer el panel al activarse
+        tutoPanel.SetActive(true); 
         isTutoPanelShowing = true;
         yield return new WaitUntil(RButtonPressedStatus);
         yield return new WaitUntil(nyaffyAlphaManager.isAphaMax);
+        source.SetFloatVar(KL.Variables.nyaffymode, 1);//en pruebas
+        source.Play(KL.Tags.nyaffymovement);//en pruebas
         StartCoroutine(NyaffyFirstAppearence());
     }
 

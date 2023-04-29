@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.UI;
+using KrillAudio.Krilloud;
 
 public class NewGame : MonoBehaviour
 {
@@ -27,7 +28,9 @@ public class NewGame : MonoBehaviour
 
     [Header("Other Buttons")]
     [SerializeField] private GameObject controlButton;
-    Button controlButtoninteract; //en pruebas
+    [SerializeField] private GameObject exitButton;
+    Button controlButtoninteract;
+    Button exitButtonInteract;
     #endregion
 
     #region Private_Variables
@@ -43,7 +46,7 @@ public class NewGame : MonoBehaviour
     CinemachineVirtualCamera camPriority;
 
     [Header("Audio")]
-    AudioSource startSound;
+    KLAudioSource source;
     #endregion
 
     private void Start()
@@ -54,12 +57,13 @@ public class NewGame : MonoBehaviour
 
     private void CatcherReferences()
     {
-        startSound = GetComponent<AudioSource>();
+        source = GetComponent<KLAudioSource>();
         anim = menuPanel.GetComponent<Animator>();
         playerAnim = player.GetComponent<Animator>();
         camPriority = menuCam.gameObject.GetComponent<CinemachineVirtualCamera>();
         playerMovementScript = player.gameObject.GetComponent<PlayerMovement>();
-        controlButtoninteract = controlButton.GetComponent<Button>();//en pruebas
+        controlButtoninteract = controlButton.GetComponent<Button>();
+        exitButtonInteract = exitButton.GetComponent<Button>();
     }
 
     #region IntroMethods
@@ -68,19 +72,20 @@ public class NewGame : MonoBehaviour
         StartCoroutine("IntroSetting");
         isIntroPlaying = true;
         GetComponent<Button>().interactable = false;
-        controlButtoninteract.interactable = false; //en pruebas
+        controlButtoninteract.interactable = false;
+        exitButtonInteract.interactable = false;
     }
 
     IEnumerator IntroSetting() //completado, pendiente de pulir, añadir sfx, etc
     {
+        source.SetFloatVar(KL.Variables.buttonstatus, 0);
+        source.Play(KL.Tags.button); //en pruebas
         playerMovementScript.enabled = false;
-        startSound.Play();
         anim.enabled = true;
         camPriority.Priority = 2;
         yield return new WaitForSeconds(1f);
         //gestión de sistemas de particulas pétalos y viento
-        SakuraGeneral.Play(); //en pruebas
-        //música y sfx (si hay)
+        SakuraGeneral.Play();
         playerAnim.Play("StandUp");
         yield return new WaitForSeconds(2f);
         StartConversation(inkHouse);
