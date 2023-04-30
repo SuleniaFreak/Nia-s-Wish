@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     #region Public_Variables
 
     [Header("Colliders Gameobjects Events")]
-    [SerializeField] private GameObject bellSoundBox;
+    [SerializeField] private GameObject backHouseBox;
     [SerializeField] private GameObject cropsColliderBox;
     [SerializeField] private GameObject nyaffyAreaColliderBox;
     [SerializeField] private GameObject finalEventColliderBox;
@@ -61,18 +61,20 @@ public class GameManager : MonoBehaviour
 
     #region Private_Variables
 
-    [Header("Characters Components")]
+    [Header("Player Components")]
     Animator playerAnim;
     int playerSpeed = 10;
     PlayerImagination playerImaginationScript;
     PlayerMovement playerMovementScript;
+
+    [Header("Nyaffy Components")]
     Animator nyaffyAnim; //sin usar aún
     AlphaManager nyaffyAlphaManager;
     NyaffyMovement nyaffyMovementScript;
 
     [Header("Audio")]
-    KLAudioSource source; //en pruebas
-    KLAudioSource nyaffySource; //en pruebas
+    KLAudioSource source;
+    KLAudioSource nyaffySource;
 
     [Header("Flowers Counter")]
     int numFlowers = 0;
@@ -105,7 +107,7 @@ public class GameManager : MonoBehaviour
     void CatcherReferences()
     {
         playerAnim = player.GetComponent<Animator>();
-        source = GetComponent<KLAudioSource>(); //en pruebas
+        source = GetComponent<KLAudioSource>();
 
         //BackHouseEvent
         playerImaginationScript = player.gameObject.GetComponentInChildren<PlayerImagination>();
@@ -137,14 +139,12 @@ public class GameManager : MonoBehaviour
     #region Trigger_Methods
     public void AddFlower()
     {
-        //en pruebas
         source.SetFloatVar(KL.Variables.pickup, 0);
         source.Play(KL.Tags.recolectable);
         numFlowers++;
 
         if (numFlowers == 6)
         {
-            //en pruebas
             source.Stop();
             source.SetFloatVar(KL.Variables.pickup, 1);
             source.Play(KL.Tags.recolectable);
@@ -185,7 +185,9 @@ public class GameManager : MonoBehaviour
         if (Input.GetMouseButtonDown(1) && isTutoPanelShowing)
         {
             isRButtonPressed = true;
-            tutoPanel.SetActive(false); //añadir sonidito al cerrar el panel
+            tutoPanel.SetActive(false);
+            source.SetFloatVar(KL.Variables.panelmode, 1); //en pruebas
+            source.Play(KL.Tags.panel);//en pruebas
             isTutoPanelShowing = false;
             underHouseCam.SetActive(true);
         }
@@ -200,22 +202,21 @@ public class GameManager : MonoBehaviour
     {
         StartDialogue(inkJSONFlowers);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        source.SetFloatVar(KL.Variables.nyaffymode, 4); //en pruebas
-        source.Play(KL.Tags.nyaffymovement);//en pruebas
+        source.SetFloatVar(KL.Variables.nyaffymode, 2);
+        source.Play(KL.Tags.nyaffymovement);
         yield return new WaitForSeconds(1f);
         StartDialogue(inkJSONSurprise);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         yield return new WaitForSeconds(2f);
-        source.Play(KL.Tags.nyaffymovement); // en pruebas
+        source.Play(KL.Tags.nyaffymovement);
         yield return new WaitForSeconds(1f);
-        //giro muy brusco, pendiente de mejora (pero funciona)
+        //funciona pero el giro es muy brusco, pendiente de mejora
         //posible cambio de cámara con cinemachine sino se encuentra algo más fluido
         player.gameObject.transform.LookAt(nyaffy.transform);
         StartDialogue(inkJSONSurprise2);
-        bellSoundBox.SetActive(true);
+        backHouseBox.SetActive(true);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        //mejorar la recepción y distancia del sonido (esperando a la clase/video de sonido)
-        nyaffy.SetActive(true); //en pruebas
+        nyaffy.SetActive(true);
         isHouseEventReady = true;
     }
 
@@ -224,27 +225,29 @@ public class GameManager : MonoBehaviour
     {
         nyaffySource.Stop();// en pruebas
         player.transform.LookAt(house.transform);
-        bellSoundBox.SetActive(false);
+        backHouseBox.SetActive(false);
         playerMovementScript.enabled = false;
         StartDialogue(inkJSONBackHouse);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         playerAnim.Play("StandToCrouch");
         StartDialogue(inkJSONBackHouse2);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
+        yield return new WaitForSeconds(0.1f);
+        source.SetFloatVar(KL.Variables.panelmode, 0);//en pruebas
+        source.Play(KL.Tags.panel);//en pruebas
         tutoPanel.SetActive(true); 
         isTutoPanelShowing = true;
         yield return new WaitUntil(RButtonPressedStatus);
         yield return new WaitUntil(nyaffyAlphaManager.isAphaMax);
-        source.SetFloatVar(KL.Variables.nyaffymode, 1);//en pruebas
-        source.Play(KL.Tags.nyaffymovement);//en pruebas
         StartCoroutine(NyaffyFirstAppearence());
     }
 
     //Evento que se ejecutará al encontrar al Nyaffy por primera vez
-    IEnumerator NyaffyFirstAppearence() //(90% completado) pendiente de revisión
+    IEnumerator NyaffyFirstAppearence()
     {
         isHouseEventReady = false;
         nyaffy.transform.LookAt(underHouseCam.transform);
+        //pendiente de encontrar un sonido cuando el gato es encontrado
         StartDialogue(inkJSONCouldBeACat);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         StartCoroutine(nyaffyMovementScript.FirstTranslation());
@@ -274,10 +277,13 @@ public class GameManager : MonoBehaviour
         //animación de confusión?
         StartDialogue(inkJSONMissedNyaffy);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
+        //nyaffy.SetActive(false); //en pruebas
         yield return new WaitForSeconds(3f);
         StartDialogue(inkJSONExtraInfoFindNyaffy);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        nyaffyAreaColliderBox.SetActive(true);
+        nyaffyAreaColliderBox.SetActive(true); //pendiente de comprobar si sigue necesitándose
+        //nyaffy.SetActive(true); //en pruebas
+        nyaffySource.Play();//en pruebas
         isCropsEventReady = false;
         isFoundNyaffyEventReady = true;
         yield return new WaitUntil(nyaffyAlphaManager.isAphaMax);
@@ -287,11 +293,15 @@ public class GameManager : MonoBehaviour
     IEnumerator FoundNyaffyEvent() //Completado, pendiente de pulir y meter particulas, sonidos, etc
     {
         nyaffyAreaColliderBox.SetActive(false);
+        nyaffySource.Stop();//en pruebas
         nyaffy.transform.LookAt(player.transform);
-        //el nyaffy ejecuta una animación (pendiente)
+        //el nyaffy ejecuta una animación al ser descubierto??
         StartDialogue(inkJSONFoundNyaffy);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
+        nyaffySource.Play();
         StartCoroutine(nyaffyMovementScript.FinalTranslation());
+        yield return new WaitForSeconds(1f); //en pruebas
+        nyaffySource.Stop();// en pruebas
         StartDialogue(inkJSONWhatIsThis);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         isFoundNyaffyEventReady = false;
@@ -306,6 +316,8 @@ public class GameManager : MonoBehaviour
         playerMovementScript.enabled = false;
         fishfigure.SetActive(false);
         fishPanel.SetActive(true);
+        source.SetFloatVar(KL.Variables.pickup, 2); //en pruebas
+        source.Play(KL.Tags.recolectable);//en pruebas
         yield return new WaitForSeconds(2f);
         fishPanel.SetActive(false);
         yield return new WaitForSeconds(0.5f);
@@ -324,7 +336,6 @@ public class GameManager : MonoBehaviour
     //corrutina que llevará al player automáticamente al final de la demo (podria cambiar a cambio de escena)
     IEnumerator AutoPlayerMove()
     {
-
         playerMovementScript.enabled = false;
 
         while (player.transform.position != finalEventColliderBox.transform.position)

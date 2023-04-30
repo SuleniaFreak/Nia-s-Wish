@@ -28,12 +28,19 @@ MonoBehaviour:
       isLoop: 0
       channelId: 0
       sourceContract: 2
+    - name: sfx
+      description: 
+      is3D: 0
+      max3DDistance: 2
+      isLoop: 1
+      channelId: 3
+      sourceContract: 2
     - name: panel
       description: 
       is3D: 0
       max3DDistance: 2
       isLoop: 0
-      channelId: 4
+      channelId: 3
       sourceContract: 2
     - name: button
       description: 
@@ -49,19 +56,12 @@ MonoBehaviour:
       isLoop: 1
       channelId: 1
       sourceContract: 2
-    - name: sfx
-      description: 
-      is3D: 0
-      max3DDistance: 2
-      isLoop: 0
-      channelId: 4
-      sourceContract: 2
     - name: recolectable
       description: 
       is3D: 0
       max3DDistance: 2
       isLoop: 0
-      channelId: 0
+      channelId: 4
       sourceContract: 2
     - name: player
       description: 
@@ -82,16 +82,47 @@ MonoBehaviour:
       is3D: 1
       max3DDistance: 200
       isLoop: 1
-      channelId: 0
+      channelId: 4
+      sourceContract: 2
+    - name: Environment
+      description: 
+      is3D: 0
+      max3DDistance: 2
+      isLoop: 1
+      channelId: 6
       sourceContract: 2
     variables:
+    - name: volume_music
+      defaultValue: 1
+      isGlobal: 0
+      source: 2
+      content: 0
+      min: 0
+      max: 1
+      sourceContract: 2
+    - name: volume_sfx
+      defaultValue: 0.2
+      isGlobal: 0
+      source: 2
+      content: 0
+      min: 0
+      max: 1
+      sourceContract: 2
+    - name: volume_house
+      defaultValue: 1
+      isGlobal: 0
+      source: 2
+      content: 0
+      min: 0
+      max: 1
+      sourceContract: 2
     - name: panelmode
       defaultValue: 0
       isGlobal: 0
       source: 2
       content: 0
       min: 0
-      max: 1
+      max: 2
       sourceContract: 2
     - name: buttonstatus
       defaultValue: 0
@@ -101,16 +132,16 @@ MonoBehaviour:
       min: 0
       max: 2
       sourceContract: 2
-    - name: ambiente
-      defaultValue: 1
+    - name: volume_forest
+      defaultValue: 0
       isGlobal: 0
       source: 2
-      content: 1
+      content: 0
       min: 0
       max: 1
       sourceContract: 2
     - name: nature
-      defaultValue: 0
+      defaultValue: 2
       isGlobal: 0
       source: 2
       content: 0
@@ -137,17 +168,25 @@ MonoBehaviour:
       defaultValue: 0
       isGlobal: 0
       source: 2
-      content: 1
+      content: 0
       min: 0
       max: 1
       sourceContract: 2
     - name: nyaffymode
-      defaultValue: 3
+      defaultValue: 0
       isGlobal: 0
       source: 2
       content: 0
       min: 0
       max: 4
+      sourceContract: 2
+    - name: ambiente
+      defaultValue: 0
+      isGlobal: 0
+      source: 2
+      content: 0
+      min: 0
+      max: 1
       sourceContract: 2
     soundbank_files: []
     channels: []

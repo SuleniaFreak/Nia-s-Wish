@@ -13,6 +13,12 @@ namespace KrillAudio.Krilloud
 			public const string button = "button";
 
 			/// <summary>
+			/// Tag: Environment
+			/// 2D
+			/// </summary>
+			public const string Environment = "Environment";
+
+			/// <summary>
 			/// Tag: music
 			/// 2D
 			/// </summary>
@@ -59,6 +65,7 @@ namespace KrillAudio.Krilloud
 			/// Tag: sfx
 			/// 2D
 			/// </summary>
+			[System.Obsolete("Cache")]
 			public const string sfx = "sfx";
 
 		}
@@ -95,7 +102,7 @@ namespace KrillAudio.Krilloud
 
 			/// <summary>
 			/// Variable: panelmode
-			/// Range: [0 - 1]
+			/// Range: [0 - 2]
 			/// Type: Local
 			/// </summary>
 			public const string panelmode = "panelmode";
@@ -121,6 +128,34 @@ namespace KrillAudio.Krilloud
 			/// </summary>
 			public const string steps = "steps";
 
+			/// <summary>
+			/// Variable: volume_forest
+			/// Range: [0 - 1]
+			/// Type: Local
+			/// </summary>
+			public const string volume_forest = "volume_forest";
+
+			/// <summary>
+			/// Variable: volume_house
+			/// Range: [0 - 1]
+			/// Type: Local
+			/// </summary>
+			public const string volume_house = "volume_house";
+
+			/// <summary>
+			/// Variable: volume_music
+			/// Range: [0 - 1]
+			/// Type: Local
+			/// </summary>
+			public const string volume_music = "volume_music";
+
+			/// <summary>
+			/// Variable: volume_sfx
+			/// Range: [0 - 1]
+			/// Type: Local
+			/// </summary>
+			public const string volume_sfx = "volume_sfx";
+
 		}
 
 		public class Channels
@@ -131,9 +166,13 @@ namespace KrillAudio.Krilloud
 
 			public const string nyaffy = "nyaffy";
 
+			public const string panel = "panel";
+
 			public const string player = "player";
 
 			public const string sfx = "sfx";
+
+			public const string Wind = "Wind";
 
 		}
 	}

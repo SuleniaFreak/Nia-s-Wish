@@ -34,8 +34,6 @@ public class NyaffyAreaColliderTrigger : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             gManager.StartDialogue(inkJSONCanHearTheBell);
-            nyaffy.SetActive(true);
-
         }
     }
 

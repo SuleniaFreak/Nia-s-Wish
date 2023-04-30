@@ -34,8 +34,6 @@ public class AlphaManager : MonoBehaviour
         isAlphaComplete = false;
         source = GetComponent<KLAudioSource>();
     }
-
-   
  
     private void Start()
     {
@@ -103,8 +101,8 @@ public class AlphaManager : MonoBehaviour
     //método que será llamado desde una animación del Nyaffy
     public void ResetTransparency()
     {
-        source.SetFloatVar(KL.Variables.nyaffymode, 2);//en pruebas
-        source.Play(KL.Tags.nyaffymovement); // en pruebas
+        source.SetFloatVar(KL.Variables.nyaffymode, 0);
+        source.Play(KL.Tags.nyaffymovement); 
         colorBase.a = 0;
         colorFace.a = 0;
         isAlphaComplete = false;
@@ -115,7 +113,7 @@ public class AlphaManager : MonoBehaviour
     //método en pruebas
     public void Jumping()
     {
-        source.SetFloatVar(KL.Variables.nyaffymode, 3);
+        source.SetFloatVar(KL.Variables.nyaffymode, 1);
         source.Play(KL.Tags.nyaffymovement);
     }
 

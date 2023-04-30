@@ -73,15 +73,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        switch (collision.gameObject.tag)
+        Debug.Log(collision.gameObject.tag);
+        if (collision.gameObject.tag == "wood")
         {
-            case "grass":
-                valueMaterial = 0;
-                break;
-            case "wood":
-                valueMaterial = 1;
-                break;
+            valueMaterial = 1;
         }
+        else
+        {
+            valueMaterial = 0;
+        }
+
     }
 
     #endregion

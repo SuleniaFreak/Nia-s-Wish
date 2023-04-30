@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using KrillAudio.Krilloud;
 
 public class NyaffyMovement : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class NyaffyMovement : MonoBehaviour
     #endregion
 
     Animator anim;
+    KLAudioSource source;
    
     private void Awake()
     {
@@ -25,14 +27,14 @@ public class NyaffyMovement : MonoBehaviour
     void CatcherReferences()
     {
         anim = GetComponent<Animator>();
+        source = GetComponent<KLAudioSource>();
     }
 
     #region Nyaffy_Translations
     //Corrutinas que gestionan el movimiento del Nyaffy por la escena
-    public IEnumerator FirstTranslation() //(Completado)
+    public IEnumerator FirstTranslation() 
     {
         transform.LookAt(destinySpots[0].position);
-        //sonido de cascabel?
         while (transform.position != destinySpots[0].position)
         {
             anim.Play("Walk");
@@ -46,7 +48,7 @@ public class NyaffyMovement : MonoBehaviour
 
     }
 
-    public IEnumerator SecondTranslation() //Completado
+    public IEnumerator SecondTranslation()
     {
         anim.Play("Jump");
         yield return new WaitForSeconds(2f);
@@ -57,7 +59,7 @@ public class NyaffyMovement : MonoBehaviour
         yield return null;
     }
 
-    public IEnumerator FinalTranslation() //Completado
+    public IEnumerator FinalTranslation()
     {
         transform.LookAt(destinySpots[2].position);
         fishFigure.SetActive(true);
@@ -65,7 +67,7 @@ public class NyaffyMovement : MonoBehaviour
         {
             anim.Play("Walk");
             transform.position = Vector3.MoveTowards(transform.position, destinySpots[2].position, walkSpeed * Time.deltaTime);
-            yield return null; //espera al siguiente frame
+            yield return null;
         }
     }
     #endregion
