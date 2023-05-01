@@ -28,10 +28,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject fishPanel;
 
     [Header("House Look At")]
-    [SerializeField] private GameObject houseLookAtSpot; // en pruebas
+    [SerializeField] private GameObject houseLookAtSpot;
 
     [Header("Particle System")]
     [SerializeField] private ParticleSystem vanishedNyaffyParticle;
+
+    [Header("Player Event Bool")]
+    [SerializeField] private bool isPlayerArrived = false;
 
     #region JSON_Files
     [Header("Collected flowers Event")]
@@ -69,7 +72,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Player Components")]
     Animator playerAnim;
-    int playerSpeed = 10;
     PlayerImagination playerImaginationScript;
     PlayerMovement playerMovementScript;
 
@@ -196,15 +198,13 @@ public class GameManager : MonoBehaviour
             source.Play(KL.Tags.panel);
             isTutoPanelShowing = false;
             underHouseCam.SetActive(true);
-            underHouseCam.transform.LookAt(house.transform); //en pruebas
+            underHouseCam.transform.LookAt(house.transform);
         }
     }
-
-
     #endregion
 
     #region Events_Corrutines
-    //Evento que se ejecuta al recoger las flores (90% completado)
+    //Evento que se ejecuta al recoger las flores (completado, pendiente de pulir)
     IEnumerator CollectedFlowersEvent()
     {
         StartDialogue(inkJSONFlowers);
@@ -214,7 +214,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         StartDialogue(inkJSONSurprise);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         source.Play(KL.Tags.nyaffymovement);
         yield return new WaitForSeconds(1f);
         //funciona pero el giro es muy brusco, pendiente de mejora
@@ -246,7 +246,7 @@ public class GameManager : MonoBehaviour
         isTutoPanelShowing = true;
         yield return new WaitUntil(RButtonPressedStatus);
         source.SetFloatVar(KL.Variables.panelmode, 1);
-        source.Play(KL.Tags.panel);//en pruebas
+        source.Play(KL.Tags.panel);
         yield return new WaitUntil(nyaffyAlphaManager.isAphaMax);
         StartCoroutine(NyaffyFirstAppearence());
     }
@@ -264,7 +264,7 @@ public class GameManager : MonoBehaviour
         underHouseCam.SetActive(false);
         yield return new WaitForSeconds(2f);
         playerAnim.Play("CrouchedToStand");
-        isHouseEventReady = false; // en pruebas
+        isHouseEventReady = false; 
         StartDialogue(inkJSONFollowTheCat);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         playerMovementScript.enabled = true;
@@ -275,7 +275,7 @@ public class GameManager : MonoBehaviour
 
     }
     //Evento que se activará al entrar en un collider cerca de los cultivos
-    public IEnumerator CropsEvent() //(Completado, falta pulir y añadir sonidos, particulas, etc)
+    public IEnumerator CropsEvent() //(Completado, falta pulir)
     {
         nyaffy.transform.LookAt(player.transform);
         StartDialogue(inkJSONDoNotEatCrops);
@@ -287,13 +287,11 @@ public class GameManager : MonoBehaviour
         //animación de confusión?
         StartDialogue(inkJSONMissedNyaffy);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        //nyaffy.SetActive(false); //en pruebas
         yield return new WaitForSeconds(3f);
         StartDialogue(inkJSONExtraInfoFindNyaffy);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
-        nyaffyAreaColliderBox.SetActive(true); //pendiente de comprobar si sigue necesitándose
-        //nyaffy.SetActive(true); //en pruebas
-        nyaffySource.Play();//en pruebas
+        nyaffyAreaColliderBox.SetActive(true); 
+        nyaffySource.Play();
         isCropsEventReady = false;
         isFoundNyaffyEventReady = true;
         yield return new WaitUntil(nyaffyAlphaManager.isAphaMax);
@@ -303,15 +301,15 @@ public class GameManager : MonoBehaviour
     IEnumerator FoundNyaffyEvent() //Completado, pendiente de pulir y meter particulas, sonidos, etc
     {
         nyaffyAreaColliderBox.SetActive(false);
-        nyaffySource.Stop();//en pruebas
+        nyaffySource.Stop();
         nyaffy.transform.LookAt(player.transform);
         //el nyaffy ejecuta una animación al ser descubierto??
         StartDialogue(inkJSONFoundNyaffy);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         nyaffySource.Play();
         StartCoroutine(nyaffyMovementScript.FinalTranslation());
-        yield return new WaitForSeconds(1f); //en pruebas
-        nyaffySource.Stop();// en pruebas
+        yield return new WaitForSeconds(1f); 
+        nyaffySource.Stop();
         StartDialogue(inkJSONWhatIsThis);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         isFoundNyaffyEventReady = false;
@@ -326,13 +324,13 @@ public class GameManager : MonoBehaviour
         playerMovementScript.enabled = false;
         fishfigure.SetActive(false);
         fishPanel.SetActive(true);
-        source.SetFloatVar(KL.Variables.pickup, 2); //en pruebas
-        source.Play(KL.Tags.recolectable);//en pruebas
+        source.SetFloatVar(KL.Variables.pickup, 2); 
+        source.Play(KL.Tags.recolectable);
         yield return new WaitForSeconds(2f);
         fishPanel.SetActive(false);
         yield return new WaitForSeconds(0.5f);
         playerMovementScript.enabled = true;
-        player.transform.LookAt(nyaffy.transform); //en pruebas
+        player.transform.LookAt(nyaffy.transform); 
         StartDialogue(inkJSONFishCathched);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         StartDialogue(inkJSONChaseTheCat);
@@ -343,20 +341,25 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    //corrutina que llevará al player automáticamente al final de la demo (podria cambiar a cambio de escena)
+    #region auto_player_movement_methods
+    //corrutina que llevará al player automáticamente al final de la demo
     IEnumerator AutoPlayerMove()
     {
         playerMovementScript.enabled = false;
 
-        while (player.transform.position != finalEventColliderBox.transform.position)
+        while (!isPlayerArrived)
         {
             playerAnim.SetBool("IsRunning", true);
-            player.transform.position = Vector3.MoveTowards(player.transform.position, finalEventColliderBox.transform.position, playerSpeed * Time.deltaTime);
+            playerMovementScript.MoveForward();
             yield return null;
         }
 
         playerAnim.SetBool("IsRunning", false);
     }
 
-
+    public void SetPlayerArrived()
+    {
+        isPlayerArrived = true;
+    }
+    #endregion
 }

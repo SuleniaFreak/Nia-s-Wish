@@ -11,6 +11,7 @@ public class CannotLeave : MonoBehaviour
     {
           if (collision.gameObject.CompareTag("Player"))
         {
+            Debug.Log("entro en el if");
           DialogueManager.GetInstance().EnterDialogueMode(inkJSONCannotLeave);
         }  
     }

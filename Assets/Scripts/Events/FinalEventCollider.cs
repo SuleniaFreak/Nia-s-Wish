@@ -10,12 +10,21 @@ public class FinalEventCollider : MonoBehaviour
     [Header("Thanks Panel")]
     [SerializeField] private GameObject thanksPanel;
 
+    [Header("Game Manager")]
+    [SerializeField] private GameObject gameManager;
+    GameManager gameManagerScript;
+
+    private void Awake()
+    {
+        gameManagerScript = gameManager.GetComponent<GameManager>();
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            //player.SetActive(false);
+            gameManagerScript.SetPlayerArrived();
             thanksPanel.SetActive(true);
         }
     }

@@ -11,8 +11,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float turnSpeed;
 
     [Header("Audio")]
-    KLAudioSource source; //en pruebas
-    float valueMaterial; //en pruebas
+    KLAudioSource source; 
+    float valueMaterial;
+
+    [Header("Character controller")]
+    CharacterController playerController;
 
     [Header("Intro Settings")]
     Rigidbody rb;
@@ -20,13 +23,11 @@ public class PlayerMovement : MonoBehaviour
 
     Animator anim;
     float h, v;
+    int finalEventSpeed = 10;
     void Start()
     {
-        anim = GetComponent<Animator>();
+        CatherReferences();
         anim.Play("Sitting");
-        rb = GetComponent<Rigidbody>();
-        col = GetComponent<Collider>();
-        source = GetComponent<KLAudioSource>();
     }
 
     void Update()
@@ -42,13 +43,24 @@ public class PlayerMovement : MonoBehaviour
         Animating();
     }
 
+    void CatherReferences()
+    {
+        anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
+        source = GetComponent<KLAudioSource>();
+        playerController = GetComponent<CharacterController>(); // en pruebas
+
+    }
+
     private void Movement()//por transform, se pone en update (si es por rb se pone en fixed)
     {
         h = Input.GetAxis("Horizontal");
         transform.Rotate(h * turnSpeed * Vector3.up * Time.deltaTime);
         v = Input.GetAxis("Vertical");
-        transform.Translate(v * moveSpeed * Vector3.forward * Time.deltaTime);
-       
+        Vector3 deltaPos = transform.forward * v * moveSpeed * Time.deltaTime; // en pruebas
+        playerController.Move(deltaPos);// en pruebas
+         
     }
 
     #region sound_and_animation_methods
@@ -73,7 +85,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.tag);
+        //Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.tag == "wood")
         {
             valueMaterial = 1;
@@ -96,6 +108,16 @@ public class PlayerMovement : MonoBehaviour
         rb.useGravity = true;
         col.enabled = true;
         anim.applyRootMotion = true;
+    }
+
+    #endregion
+
+    #region Final_event_Method
+
+    public void MoveForward()
+    {
+        Vector3 direction = transform.forward * finalEventSpeed * Time.deltaTime;
+        playerController.Move(direction);
     }
 
     #endregion
