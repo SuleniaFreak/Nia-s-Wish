@@ -25,6 +25,7 @@ public class NewGame : MonoBehaviour
 
     [Header("Particle Systems")]
     [SerializeField] private ParticleSystem SakuraGeneral;
+    [SerializeField] private ParticleSystem wind;
 
     [Header("Other Buttons")]
     [SerializeField] private GameObject controlButton;
@@ -86,6 +87,7 @@ public class NewGame : MonoBehaviour
         yield return new WaitForSeconds(1f);
         //gestión de sistemas de particulas pétalos y viento
         SakuraGeneral.Play();
+        wind.Play();
         playerAnim.Play("StandUp");
         yield return new WaitForSeconds(2f);
         StartConversation(inkHouse);

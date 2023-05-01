@@ -109,7 +109,7 @@ namespace KrillAudio.Krilloud
 
 			/// <summary>
 			/// Variable: pickup
-			/// Range: [0 - 1]
+			/// Range: [0 - 2]
 			/// Type: Local
 			/// </summary>
 			public const string pickup = "pickup";

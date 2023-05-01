@@ -70,7 +70,6 @@ public class TutoImagination : MonoBehaviour
         else
         {
             Cursor.lockState = CursorLockMode.None;
-            playerMovement.enabled = true;
 
             if (ObjectDetected != null)
             {

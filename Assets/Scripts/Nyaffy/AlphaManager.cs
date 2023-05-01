@@ -9,7 +9,6 @@ public class AlphaManager : MonoBehaviour
     [Header("Changeable Materials")]
     [SerializeField] private Material nyaffyBase;
     [SerializeField] private Material nyaffyFace;
-    [SerializeField] private Material nyaffyAlphaMax; //en pruebas
 
     [Header("Particle Systems")]
     [SerializeField] private GameObject TransparentParticleSystem;
@@ -106,8 +105,6 @@ public class AlphaManager : MonoBehaviour
         colorBase.a = 0;
         colorFace.a = 0;
         isAlphaComplete = false;
-
-        //pendiente de un sistema de particulas (por determinar si aquí o en la animación)
     }
 
     //método en pruebas

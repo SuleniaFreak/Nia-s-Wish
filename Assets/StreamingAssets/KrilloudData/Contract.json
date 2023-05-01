@@ -17,7 +17,7 @@
                 "doppler_active": false,
                 "doppler_factor": 1.0,
                 "isLoopable": false,
-                "channel_id": 3,
+                "channel_id": 5,
                 "levelName": "Root",
                 "associated_ID": -1,
                 "gids": 9,
@@ -1934,6 +1934,12 @@
                 "size": 1048333
             },
             {
+                "id": 69999,
+                "bankFile": "KSB39856494969885070191DATA.krll",
+                "offsetBytes": 3349947,
+                "size": 17911562
+            },
+            {
                 "id": 28572,
                 "bankFile": "KSB39856494969885070192DATA.krll",
                 "offsetBytes": 0,
@@ -2092,12 +2098,12 @@
             },
             {
                 "variable_name": "pickup",
-                "current_value": 0.0,
+                "current_value": 2.0,
                 "type": 0,
                 "source": 2,
                 "content": 0,
                 "range_min": 0.0,
-                "range_max": 1.0,
+                "range_max": 2.0,
                 "set_only_on_play": false
             },
             {
@@ -2211,6 +2217,6 @@
                 "buffer_size": 0
             }
         ],
-        "creation_time": 1682870041
+        "creation_time": 1682972747
     }
 }

@@ -27,6 +27,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject tutoPanel;
     [SerializeField] private GameObject fishPanel;
 
+    [Header("House Look At")]
+    [SerializeField] private GameObject houseLookAtSpot; // en pruebas
+
+    [Header("Particle System")]
+    [SerializeField] private ParticleSystem vanishedNyaffyParticle;
+
     #region JSON_Files
     [Header("Collected flowers Event")]
     [SerializeField] private TextAsset inkJSONFlowers;
@@ -186,10 +192,11 @@ public class GameManager : MonoBehaviour
         {
             isRButtonPressed = true;
             tutoPanel.SetActive(false);
-            source.SetFloatVar(KL.Variables.panelmode, 1); //en pruebas
-            source.Play(KL.Tags.panel);//en pruebas
+            source.SetFloatVar(KL.Variables.panelmode, 1);
+            source.Play(KL.Tags.panel);
             isTutoPanelShowing = false;
             underHouseCam.SetActive(true);
+            underHouseCam.transform.LookAt(house.transform); //en pruebas
         }
     }
 
@@ -223,8 +230,8 @@ public class GameManager : MonoBehaviour
     //Evento que se ejecutará al interactuar con el collider de detrás de la casa (completado, falta pulir)
     IEnumerator BackHouseEvent()
     {
-        nyaffySource.Stop();// en pruebas
-        player.transform.LookAt(house.transform);
+        nyaffySource.Stop();
+        player.transform.LookAt(nyaffy.transform);
         backHouseBox.SetActive(false);
         playerMovementScript.enabled = false;
         StartDialogue(inkJSONBackHouse);
@@ -233,11 +240,13 @@ public class GameManager : MonoBehaviour
         StartDialogue(inkJSONBackHouse2);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         yield return new WaitForSeconds(0.1f);
-        source.SetFloatVar(KL.Variables.panelmode, 0);//en pruebas
-        source.Play(KL.Tags.panel);//en pruebas
+        source.SetFloatVar(KL.Variables.panelmode, 0);
+        source.Play(KL.Tags.panel);
         tutoPanel.SetActive(true); 
         isTutoPanelShowing = true;
         yield return new WaitUntil(RButtonPressedStatus);
+        source.SetFloatVar(KL.Variables.panelmode, 1);
+        source.Play(KL.Tags.panel);//en pruebas
         yield return new WaitUntil(nyaffyAlphaManager.isAphaMax);
         StartCoroutine(NyaffyFirstAppearence());
     }
@@ -245,9 +254,7 @@ public class GameManager : MonoBehaviour
     //Evento que se ejecutará al encontrar al Nyaffy por primera vez
     IEnumerator NyaffyFirstAppearence()
     {
-        isHouseEventReady = false;
         nyaffy.transform.LookAt(underHouseCam.transform);
-        //pendiente de encontrar un sonido cuando el gato es encontrado
         StartDialogue(inkJSONCouldBeACat);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         StartCoroutine(nyaffyMovementScript.FirstTranslation());
@@ -257,6 +264,7 @@ public class GameManager : MonoBehaviour
         underHouseCam.SetActive(false);
         yield return new WaitForSeconds(2f);
         playerAnim.Play("CrouchedToStand");
+        isHouseEventReady = false; // en pruebas
         StartDialogue(inkJSONFollowTheCat);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         playerMovementScript.enabled = true;
@@ -272,6 +280,8 @@ public class GameManager : MonoBehaviour
         nyaffy.transform.LookAt(player.transform);
         StartDialogue(inkJSONDoNotEatCrops);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
+        vanishedNyaffyParticle.Play(); // en pruebas
+        yield return new WaitForSeconds(0.5f);
         StartCoroutine(nyaffyMovementScript.SecondTranslation());
         yield return new WaitForSeconds(1f);
         //animación de confusión?

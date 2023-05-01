@@ -40,7 +40,7 @@ MonoBehaviour:
       is3D: 0
       max3DDistance: 2
       isLoop: 0
-      channelId: 3
+      channelId: 5
       sourceContract: 2
     - name: button
       description: 
@@ -149,12 +149,12 @@ MonoBehaviour:
       max: 1
       sourceContract: 2
     - name: pickup
-      defaultValue: 0
+      defaultValue: 2
       isGlobal: 0
       source: 2
       content: 0
       min: 0
-      max: 1
+      max: 2
       sourceContract: 2
     - name: steps
       defaultValue: 1

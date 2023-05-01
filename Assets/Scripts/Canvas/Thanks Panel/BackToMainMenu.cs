@@ -24,9 +24,15 @@ public class BackToMainMenu : MonoBehaviour
 
     public void LoadScene()
     {
-        source.Play(); //en pruebas
-        SceneManager.LoadScene("Scene1");
+        StartCoroutine(FinishedDemo());
+    }
 
+    IEnumerator FinishedDemo()
+    {
+        source.SetFloatVar(KL.Variables.buttonstatus, 0);
+        source.Play(KL.Tags.button);
+        yield return new WaitForSeconds(0.5f);
+        SceneManager.LoadScene("Scene1");
         newGameButtonMode.interactable = true;
     }
 
