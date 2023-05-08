@@ -7,14 +7,13 @@ public class CannotLeave : MonoBehaviour
     [Header("inkJSON")]
     [SerializeField] private TextAsset inkJSONCannotLeave;
 
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider other)
     {
-          if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("entro en el if");
-          DialogueManager.GetInstance().EnterDialogueMode(inkJSONCannotLeave);
-        }  
+            DialogueManager.GetInstance().EnterDialogueMode(inkJSONCannotLeave);
+        }
     }
-   
 
 }

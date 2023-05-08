@@ -77,15 +77,14 @@ public class NewGame : MonoBehaviour
         exitButtonInteract.interactable = false;
     }
 
-    IEnumerator IntroSetting() //completado, pendiente de pulir, añadir sfx, etc
+    IEnumerator IntroSetting() //Completado
     {
         source.SetFloatVar(KL.Variables.buttonstatus, 0);
-        source.Play(KL.Tags.button); //en pruebas
+        source.Play(KL.Tags.button);
         playerMovementScript.enabled = false;
         anim.enabled = true;
         camPriority.Priority = 2;
         yield return new WaitForSeconds(1f);
-        //gestión de sistemas de particulas pétalos y viento
         SakuraGeneral.Play();
         wind.Play();
         playerAnim.Play("StandUp");
@@ -104,7 +103,6 @@ public class NewGame : MonoBehaviour
 
     void StartConversation(TextAsset inkJSON)
     {
-
         DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
     }
 
