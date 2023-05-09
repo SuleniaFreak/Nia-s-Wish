@@ -15,6 +15,9 @@ public class NyaffyAreaColliderTrigger : MonoBehaviour
     [Header("Ink JSON Files")]
     [SerializeField] private TextAsset inkJSONCanHearTheBell;
     [SerializeField] private TextAsset inkJSONCannotHearTheBell;
+
+    [Header("Particle System")]
+    [SerializeField] private ParticleSystem clue;
     #endregion
 
     #region Private_Variables
@@ -34,7 +37,8 @@ public class NyaffyAreaColliderTrigger : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             gManager.StartDialogue(inkJSONCanHearTheBell);
-            nyaffy.SetActive(true); //en pruebas
+            nyaffy.SetActive(true);
+            clue.Play();//en pruebas
         }
     }
 
@@ -43,7 +47,8 @@ public class NyaffyAreaColliderTrigger : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             gManager.StartDialogue(inkJSONCannotHearTheBell);
-            nyaffy.SetActive(false);// en pruebas
+            nyaffy.SetActive(false);
+            clue.Stop();//en pruebas
         }
     }
 
