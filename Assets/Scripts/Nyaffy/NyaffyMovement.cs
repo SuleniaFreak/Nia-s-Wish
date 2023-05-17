@@ -16,23 +16,22 @@ public class NyaffyMovement : MonoBehaviour
     #endregion
 
     Animator anim;
-    KLAudioSource source;
-   
+    Collider nyaffycollider; 
+
     private void Awake()
     {
         CatcherReferences();
     }
 
-
     void CatcherReferences()
     {
         anim = GetComponent<Animator>();
-        source = GetComponent<KLAudioSource>();
+        nyaffycollider = GetComponent<Collider>(); 
     }
 
     #region Nyaffy_Translations
     //Corrutinas que gestionan el movimiento del Nyaffy por la escena
-    public IEnumerator FirstTranslation() 
+    public IEnumerator FirstTranslation()
     {
         transform.LookAt(destinySpots[0].position);
         while (transform.position != destinySpots[0].position)
@@ -63,7 +62,8 @@ public class NyaffyMovement : MonoBehaviour
     {
         transform.LookAt(destinySpots[2].position);
         fishFigure.SetActive(true);
-        while (transform.position != destinySpots[2].position) 
+        nyaffycollider.isTrigger = false; 
+        while (transform.position != destinySpots[2].position)
         {
             anim.Play("Walk");
             transform.position = Vector3.MoveTowards(transform.position, destinySpots[2].position, walkSpeed * Time.deltaTime);
