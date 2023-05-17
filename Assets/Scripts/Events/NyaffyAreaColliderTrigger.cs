@@ -48,7 +48,7 @@ public class NyaffyAreaColliderTrigger : MonoBehaviour
         {
             gManager.StartDialogue(inkJSONCannotHearTheBell);
             nyaffy.SetActive(false);
-            clue.Stop();//en pruebas
+           // clue.Stop();//en pruebas
         }
     }
 

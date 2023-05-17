@@ -13,6 +13,18 @@ namespace KrillAudio.Krilloud
 			public const string button = "button";
 
 			/// <summary>
+			/// Tag: Crickets
+			/// 3D
+			/// </summary>
+			public const string Crickets = "Crickets";
+
+			/// <summary>
+			/// Tag: Crickets v2
+			/// 3D
+			/// </summary>
+			public const string Crickets_v2 = "Crickets v2";
+
+			/// <summary>
 			/// Tag: Environment
 			/// 2D
 			/// </summary>
@@ -160,6 +172,8 @@ namespace KrillAudio.Krilloud
 
 		public class Channels
 		{
+			public const string Crickets = "Crickets";
+
 			public const string Master = "Master";
 
 			public const string music = "music";

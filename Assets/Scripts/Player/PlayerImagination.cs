@@ -55,7 +55,7 @@ public class PlayerImagination : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             virtualCamera.Priority = 25;
 
-            Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue);
+            Debug.DrawRay(ray.origin, ray.direction * 100, Color.green);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
             {
                 ObjectDetected = hit.collider.gameObject;

@@ -1893,6 +1893,162 @@
                     }
                 ],
                 "graphLevels_info": []
+            },
+            {
+                "tagname": "Crickets",
+                "is3Dtag": true,
+                "Min3DDistance": 10.0,
+                "Max3DDistance": 100.0,
+                "roll_off_factor": 1.0,
+                "attenuationType": 1,
+                "distance_delay": false,
+                "doppler_active": false,
+                "doppler_factor": 0.0,
+                "isLoopable": true,
+                "channel_id": 7,
+                "levelName": "Root",
+                "associated_ID": -1,
+                "gids": 3,
+                "graphNodes_info": [
+                    {
+                        "type": 18,
+                        "ID": 0,
+                        "Name": "Output",
+                        "Pos_x": 469.9000244140625,
+                        "Pos_y": -136.89999389648438,
+                        "Size_x": 100.0,
+                        "Size_y": 50.0,
+                        "can_be_deleted": false,
+                        "inputsCount": 1,
+                        "outputsCount": 0,
+                        "sockets": [
+                            {
+                                "SocketID": 0,
+                                "connection_type": 0,
+                                "data_type": 0,
+                                "links": [
+                                    {
+                                        "my_socket_id": 0,
+                                        "connected_node_id": 3,
+                                        "connected_node_socket_id": 0
+                                    }
+                                ]
+                            }
+                        ],
+                        "values": []
+                    },
+                    {
+                        "type": 1,
+                        "ID": 3,
+                        "Name": "crickets",
+                        "Pos_x": -9.5999755859375,
+                        "Pos_y": -229.89999389648438,
+                        "Size_x": 200.0,
+                        "Size_y": 100.0,
+                        "can_be_deleted": true,
+                        "inputsCount": 0,
+                        "outputsCount": 1,
+                        "sockets": [
+                            {
+                                "SocketID": 0,
+                                "connection_type": 1,
+                                "data_type": 0,
+                                "links": [
+                                    {
+                                        "my_socket_id": 0,
+                                        "connected_node_id": 0,
+                                        "connected_node_socket_id": 0
+                                    }
+                                ]
+                            }
+                        ],
+                        "values": [
+                            1.0,
+                            0.0,
+                            27706.0,
+                            1.0
+                        ]
+                    }
+                ],
+                "graphLevels_info": []
+            },
+            {
+                "tagname": "Crickets v2",
+                "is3Dtag": true,
+                "Min3DDistance": 10.0,
+                "Max3DDistance": 100.0,
+                "roll_off_factor": 1.0,
+                "attenuationType": 1,
+                "distance_delay": false,
+                "doppler_active": false,
+                "doppler_factor": 0.0,
+                "isLoopable": true,
+                "channel_id": 7,
+                "levelName": "Root",
+                "associated_ID": -1,
+                "gids": 3,
+                "graphNodes_info": [
+                    {
+                        "type": 18,
+                        "ID": 0,
+                        "Name": "Output",
+                        "Pos_x": 469.9000244140625,
+                        "Pos_y": -136.89999389648438,
+                        "Size_x": 100.0,
+                        "Size_y": 50.0,
+                        "can_be_deleted": false,
+                        "inputsCount": 1,
+                        "outputsCount": 0,
+                        "sockets": [
+                            {
+                                "SocketID": 0,
+                                "connection_type": 0,
+                                "data_type": 0,
+                                "links": [
+                                    {
+                                        "my_socket_id": 0,
+                                        "connected_node_id": 3,
+                                        "connected_node_socket_id": 0
+                                    }
+                                ]
+                            }
+                        ],
+                        "values": []
+                    },
+                    {
+                        "type": 1,
+                        "ID": 3,
+                        "Name": "crickets",
+                        "Pos_x": -9.5999755859375,
+                        "Pos_y": -229.89999389648438,
+                        "Size_x": 200.0,
+                        "Size_y": 100.0,
+                        "can_be_deleted": true,
+                        "inputsCount": 0,
+                        "outputsCount": 1,
+                        "sockets": [
+                            {
+                                "SocketID": 0,
+                                "connection_type": 1,
+                                "data_type": 0,
+                                "links": [
+                                    {
+                                        "my_socket_id": 0,
+                                        "connected_node_id": 0,
+                                        "connected_node_socket_id": 0
+                                    }
+                                ]
+                            }
+                        ],
+                        "values": [
+                            1.0,
+                            0.0,
+                            23077.0,
+                            1.0
+                        ]
+                    }
+                ],
+                "graphLevels_info": []
             }
         ],
         "sounbank_files": [
@@ -1922,134 +2078,146 @@
                 "size": 5839
             },
             {
-                "id": 35911,
+                "id": 27706,
                 "bankFile": "KSB39856494969885070191DATA.krll",
+                "offsetBytes": 0,
+                "size": 171348
+            },
+            {
+                "id": 23077,
+                "bankFile": "KSB39856494969885070191DATA.krll",
+                "offsetBytes": 171348,
+                "size": 183304
+            },
+            {
+                "id": 35911,
+                "bankFile": "KSB39856494969885070192DATA.krll",
                 "offsetBytes": 0,
                 "size": 2301614
             },
             {
                 "id": 39098,
-                "bankFile": "KSB39856494969885070191DATA.krll",
+                "bankFile": "KSB39856494969885070192DATA.krll",
                 "offsetBytes": 2301614,
                 "size": 1048333
             },
             {
                 "id": 69999,
-                "bankFile": "KSB39856494969885070191DATA.krll",
+                "bankFile": "KSB39856494969885070192DATA.krll",
                 "offsetBytes": 3349947,
                 "size": 17911562
             },
             {
                 "id": 28572,
-                "bankFile": "KSB39856494969885070192DATA.krll",
+                "bankFile": "KSB39856494969885070193DATA.krll",
                 "offsetBytes": 0,
                 "size": 37420
             },
             {
                 "id": 28594,
-                "bankFile": "KSB39856494969885070192DATA.krll",
+                "bankFile": "KSB39856494969885070193DATA.krll",
                 "offsetBytes": 37420,
                 "size": 60465
             },
             {
                 "id": 37482,
-                "bankFile": "KSB39856494969885070192DATA.krll",
+                "bankFile": "KSB39856494969885070193DATA.krll",
                 "offsetBytes": 97885,
                 "size": 926923
             },
             {
                 "id": 28233,
-                "bankFile": "KSB39856494969885070192DATA.krll",
+                "bankFile": "KSB39856494969885070193DATA.krll",
                 "offsetBytes": 1024808,
                 "size": 9053
             },
             {
                 "id": 31013,
-                "bankFile": "KSB39856494969885070192DATA.krll",
+                "bankFile": "KSB39856494969885070193DATA.krll",
                 "offsetBytes": 1033861,
                 "size": 34692
             },
             {
                 "id": 27857,
-                "bankFile": "KSB39856494969885070192DATA.krll",
+                "bankFile": "KSB39856494969885070193DATA.krll",
                 "offsetBytes": 1068553,
                 "size": 5826
             },
             {
                 "id": 28546,
-                "bankFile": "KSB39856494969885070192DATA.krll",
+                "bankFile": "KSB39856494969885070193DATA.krll",
                 "offsetBytes": 1074379,
                 "size": 3955
             },
             {
                 "id": 32604,
-                "bankFile": "KSB39856494969885070193DATA.krll",
+                "bankFile": "KSB39856494969885070194DATA.krll",
                 "offsetBytes": 0,
                 "size": 7974
             },
             {
                 "id": 32627,
-                "bankFile": "KSB39856494969885070193DATA.krll",
+                "bankFile": "KSB39856494969885070194DATA.krll",
                 "offsetBytes": 7974,
                 "size": 8667
             },
             {
                 "id": 30007,
-                "bankFile": "KSB39856494969885070193DATA.krll",
+                "bankFile": "KSB39856494969885070194DATA.krll",
                 "offsetBytes": 16641,
                 "size": 11761
             },
             {
                 "id": 30028,
-                "bankFile": "KSB39856494969885070193DATA.krll",
+                "bankFile": "KSB39856494969885070194DATA.krll",
                 "offsetBytes": 28402,
                 "size": 11823
             },
             {
                 "id": 22938,
-                "bankFile": "KSB39856494969885070193DATA.krll",
+                "bankFile": "KSB39856494969885070194DATA.krll",
                 "offsetBytes": 40225,
                 "size": 9925
             },
             {
                 "id": 25306,
-                "bankFile": "KSB39856494969885070193DATA.krll",
+                "bankFile": "KSB39856494969885070194DATA.krll",
                 "offsetBytes": 50150,
                 "size": 8569
             },
             {
                 "id": 25325,
-                "bankFile": "KSB39856494969885070193DATA.krll",
+                "bankFile": "KSB39856494969885070194DATA.krll",
                 "offsetBytes": 58719,
                 "size": 8672
             },
             {
                 "id": 25344,
-                "bankFile": "KSB39856494969885070193DATA.krll",
+                "bankFile": "KSB39856494969885070194DATA.krll",
                 "offsetBytes": 67391,
                 "size": 9832
             },
             {
                 "id": 53621,
-                "bankFile": "KSB39856494969885070194DATA.krll",
+                "bankFile": "KSB39856494969885070195DATA.krll",
                 "offsetBytes": 0,
                 "size": 16795
             },
             {
                 "id": 60979,
-                "bankFile": "KSB39856494969885070194DATA.krll",
+                "bankFile": "KSB39856494969885070195DATA.krll",
                 "offsetBytes": 16795,
                 "size": 18345
             },
             {
                 "id": 29240,
-                "bankFile": "KSB39856494969885070195DATA.krll",
+                "bankFile": "KSB39856494969885070196DATA.krll",
                 "offsetBytes": 0,
                 "size": 79450
             },
             {
                 "id": 23869,
-                "bankFile": "KSB39856494969885070195DATA.krll",
+                "bankFile": "KSB39856494969885070196DATA.krll",
                 "offsetBytes": 79450,
                 "size": 443271
             }
@@ -2058,7 +2226,7 @@
             {
                 "cereal_class_version": 20191030,
                 "variable_name": "panelmode",
-                "current_value": 0.0,
+                "current_value": 1.0,
                 "type": 0,
                 "source": 2,
                 "content": 0,
@@ -2108,7 +2276,7 @@
             },
             {
                 "variable_name": "steps",
-                "current_value": 1.0,
+                "current_value": 0.0,
                 "type": 0,
                 "source": 2,
                 "content": 0,
@@ -2200,6 +2368,12 @@
                 "channel_name": "Wind",
                 "parent_id": 0,
                 "volume": 0.20000000298023225
+            },
+            {
+                "channel_id": 7,
+                "channel_name": "Crickets",
+                "parent_id": 0,
+                "volume": 0.6000000238418579
             }
         ],
         "engine_configurations": [
@@ -2217,6 +2391,6 @@
                 "buffer_size": 0
             }
         ],
-        "creation_time": 1682972747
+        "creation_time": 1684336535
     }
 }

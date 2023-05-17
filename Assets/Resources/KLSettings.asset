@@ -91,6 +91,20 @@ MonoBehaviour:
       isLoop: 1
       channelId: 6
       sourceContract: 2
+    - name: Crickets
+      description: 
+      is3D: 1
+      max3DDistance: 100
+      isLoop: 1
+      channelId: 7
+      sourceContract: 2
+    - name: Crickets v2
+      description: 
+      is3D: 1
+      max3DDistance: 100
+      isLoop: 1
+      channelId: 7
+      sourceContract: 2
     variables:
     - name: volume_music
       defaultValue: 1
@@ -117,7 +131,7 @@ MonoBehaviour:
       max: 1
       sourceContract: 2
     - name: panelmode
-      defaultValue: 0
+      defaultValue: 1
       isGlobal: 0
       source: 2
       content: 0
@@ -157,7 +171,7 @@ MonoBehaviour:
       max: 2
       sourceContract: 2
     - name: steps
-      defaultValue: 1
+      defaultValue: 0
       isGlobal: 0
       source: 2
       content: 0

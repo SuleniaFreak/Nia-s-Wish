@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using KrillAudio.Krilloud;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject nyaffyAreaColliderBox;
     [SerializeField] private GameObject finalEventColliderBox;
     [SerializeField] private GameObject fishfigure;
+
+    [Header("Flowers Counter")]
+    [SerializeField] private GameObject flowerPanel;
+    [SerializeField] private TextMeshProUGUI flowerText; 
 
     [Header("Characters")]
     [SerializeField] private GameObject player;
@@ -76,7 +81,6 @@ public class GameManager : MonoBehaviour
     PlayerMovement playerMovementScript;
 
     [Header("Nyaffy Components")]
-    Animator nyaffyAnim; //sin usar aún
     AlphaManager nyaffyAlphaManager;
     NyaffyMovement nyaffyMovementScript;
 
@@ -122,7 +126,6 @@ public class GameManager : MonoBehaviour
         playerMovementScript = player.GetComponent<PlayerMovement>();
 
         //NyaffyFirstAppearance
-        nyaffyAnim = nyaffy.GetComponent<Animator>();
         nyaffyAlphaManager = nyaffy.GetComponent<AlphaManager>();
         nyaffyMovementScript = nyaffy.GetComponent<NyaffyMovement>();
         nyaffySource = nyaffy.GetComponent<KLAudioSource>();
@@ -147,9 +150,11 @@ public class GameManager : MonoBehaviour
     #region Trigger_Methods
     public void AddFlower()
     {
+        flowerPanel.SetActive(true);
         source.SetFloatVar(KL.Variables.pickup, 0);
         source.Play(KL.Tags.recolectable);
         numFlowers++;
+        flowerText.text = numFlowers.ToString() + "/6";
 
         if (numFlowers == 6)
         {
@@ -217,14 +222,13 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         source.Play(KL.Tags.nyaffymovement);
         yield return new WaitForSeconds(1f);
-        //funciona pero el giro es muy brusco, pendiente de mejora
-        //posible cambio de cámara con cinemachine sino se encuentra algo más fluido
         player.gameObject.transform.LookAt(nyaffy.transform);
         StartDialogue(inkJSONSurprise2);
         backHouseBox.SetActive(true);
         yield return new WaitUntil(DialogueManager.GetInstance().IsNotDialoguePlaying);
         nyaffy.SetActive(true);
         isHouseEventReady = true;
+        flowerPanel.SetActive(false);
     }
 
     //Evento que se ejecutará al interactuar con el collider de detrás de la casa (completado, falta pulir)

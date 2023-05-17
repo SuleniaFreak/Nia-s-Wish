@@ -38,7 +38,7 @@ public class TutoImagination : MonoBehaviour
             playerMovement.enabled = false;
             Cursor.lockState = CursorLockMode.Locked;
           
-            Debug.DrawRay(ray.origin, ray.direction * 100, Color.blue);
+            Debug.DrawRay(ray.origin, ray.direction * 1000, Color.yellow);
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, layerMask))
             {
                 ObjectDetected = hit.collider.gameObject;
