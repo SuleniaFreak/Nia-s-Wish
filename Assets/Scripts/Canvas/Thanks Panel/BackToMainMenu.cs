@@ -29,10 +29,12 @@ public class BackToMainMenu : MonoBehaviour
 
     IEnumerator FinishedDemo()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
         source.SetFloatVar(KL.Variables.buttonstatus, 0);
         source.Play(KL.Tags.button);
         yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadScene("Scene1");
+        SceneManager.LoadScene("EnglishScene");
         newGameButtonMode.interactable = true;
     }
 

@@ -19,6 +19,11 @@ public class FinalEventCollider : MonoBehaviour
         gameManagerScript = gameManager.GetComponent<GameManager>();
     }
 
+    private void Update()
+    {
+        Cursor.visible = true;
+    }
+
 
     private void OnTriggerEnter(Collider other)
     {

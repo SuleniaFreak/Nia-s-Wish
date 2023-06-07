@@ -100,6 +100,7 @@ public class DialogueManager : MonoBehaviour
     //método que iniciará el dialogo
     public void EnterDialogueMode(TextAsset inkJSON)
     {
+        Cursor.visible = true;
         //Inicializamos la variable asignandole el valor del parámetro de entrada
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
@@ -118,6 +119,7 @@ public class DialogueManager : MonoBehaviour
     //método para cerrar el dialogo si ha terminado el texto
     private IEnumerator ExitDialogueMode()
     {
+        Cursor.visible = false;
         source.SetFloatVar(KL.Variables.panelmode, 1);
         source.Play(); 
         if (newGameButton.isIntroPlaying)
@@ -236,7 +238,8 @@ public class DialogueManager : MonoBehaviour
         currentStory.ChooseChoiceIndex(choiceIndex);
         ContinueStory();
         waitingForChoice = false;
-        source.Play(); //en pruebas
+        source.Play(); 
+        Cursor.visible = false;//en pruebas
     }
 
     #endregion

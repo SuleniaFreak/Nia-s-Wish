@@ -28,6 +28,8 @@ public class NewGame : MonoBehaviour
     [SerializeField] private ParticleSystem wind;
 
     [Header("Other Buttons")]
+    [SerializeField] private GameObject languageButton;
+    [SerializeField] private GameObject languageDialogueBox;
     [SerializeField] private GameObject controlButton;
     [SerializeField] private GameObject exitButton;
     Button controlButtoninteract;
@@ -52,6 +54,7 @@ public class NewGame : MonoBehaviour
 
     private void Start()
     {
+        Cursor.lockState = CursorLockMode.Confined; //impedimos que el ratón salga de la pantalla
         StopAllCoroutines();
         CatcherReferences();
     }
@@ -70,11 +73,14 @@ public class NewGame : MonoBehaviour
     #region IntroMethods
     public void NewGamePressed()
     {
+        Cursor.visible = false; //ocultamos el ratón
         StartCoroutine("IntroSetting");
         isIntroPlaying = true;
         GetComponent<Button>().interactable = false;
         controlButtoninteract.interactable = false;
         exitButtonInteract.interactable = false;
+        languageButton.SetActive(false);
+        languageDialogueBox.SetActive(false);
     }
 
     IEnumerator IntroSetting() //Completado
